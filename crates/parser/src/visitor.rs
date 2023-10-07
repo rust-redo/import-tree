@@ -1,5 +1,5 @@
 use oxc_resolver::{ResolveError, ResolveOptions, Resolver};
-use std::path::Path;
+use std::{path::Path, sync::Arc};
 use swc_ecmascript::{
   ast::{ImportDecl, ImportSpecifier},
   visit::{noop_visit_type, Visit},
@@ -47,7 +47,7 @@ impl ImportVisitor {
     };
 
     ImportNode {
-      id,
+      id: Arc::new(id),
       kind,
       ..ImportNode::default()
     }
@@ -79,7 +79,7 @@ impl Visit for ImportVisitor {
 
     let module_node =
       self.resolve_from_process_id(&String::from_utf8_lossy(&import.src.value.as_bytes()));
-    let module_id = module_node.id.to_owned();
+    let module_id = module_node.id.clone();
     let process_node = self.insert_process_node_depent(module_node);
 
     let imports = process_node.import.as_mut().unwrap();

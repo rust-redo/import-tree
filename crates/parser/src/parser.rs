@@ -36,7 +36,7 @@ impl Parser {
   //   return self.parse_file(file);
   // }
 
-  pub fn parse(&self, file: &str) -> HashMap<String, ImportNode> {
+  pub fn parse(&self, file: &str) -> HashMap<Arc<String>, ImportNode> {
     let mut visitor = ImportVisitor::new();
     let full_file = &visitor
       .resolve(env::current_dir().unwrap().to_str().unwrap(), file)

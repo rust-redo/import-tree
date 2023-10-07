@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, sync::Arc};
 
 use serde::Serialize;
 
@@ -9,6 +9,7 @@ pub struct ImportSpecifier {
 }
 
 #[derive(Serialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum ImportLinkKind {
   Static,
   Dynamic,
@@ -16,6 +17,7 @@ pub enum ImportLinkKind {
 }
 
 #[derive(Serialize, Debug, Default, Clone)]
+#[serde(rename_all = "camelCase")]
 pub enum ImportNodeKind {
   #[default]
   Local,
@@ -25,7 +27,7 @@ pub enum ImportNodeKind {
 #[derive(Serialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct ImportLink {
-  pub id: String,
+  pub id: Arc<String>,
   #[serde(rename = "type")]
   pub kind: ImportLinkKind,
   pub ident: Vec<ImportSpecifier>,
@@ -34,17 +36,17 @@ pub struct ImportLink {
 #[derive(Serialize, Debug, Default, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct ImportNode {
-  pub id: String,
+  pub id: Arc<String>,
   #[serde(rename = "type")]
   pub kind: ImportNodeKind,
-  pub importer: Option<Vec<String>>,
+  pub importer: Option<Vec<Arc<String>>>,
   pub import: Option<Vec<ImportLink>>,
 }
 
 #[derive(Serialize, Debug)]
 pub struct ImportNodeMap {
   #[serde(flatten)]
-  pub(crate) map: HashMap<String, ImportNode>,
+  pub(crate) map: HashMap<Arc<String>, ImportNode>,
 }
 
 impl ImportNodeMap {
@@ -55,26 +57,26 @@ impl ImportNodeMap {
   }
 
   pub(crate) fn create_node(&mut self, id: &str) {
+    let arc_id = Arc::new(id.to_owned());
     self.map.insert(
-      id.to_owned(),
+      arc_id.clone(),
       ImportNode {
-        id: id.to_owned(),
+        id: arc_id.clone(),
         ..ImportNode::default()
       },
     );
   }
 
-  // pub(crate) fn update_node(&mut self, id: &str, )
-
   pub(crate) fn insert_node_depend(&mut self, id: &str, module: ImportNode) -> &mut ImportNode {
-    let module_id = module.id.to_owned();
+    let root_id = Arc::new(id.to_owned());
+    let module_id = module.id.clone();
     let module_node = self.map.get_mut(&module_id);
 
     let module_node = match module_node {
       Some(m) => m,
       None => {
-        self.map.insert(module_id.to_owned(), module);
-        self.map.get_mut(&module_id).unwrap()
+        self.map.insert(module_id.clone(), module);
+        self.map.get_mut(&module_id.clone()).unwrap()
       }
     };
 
@@ -82,9 +84,9 @@ impl ImportNodeMap {
       module_node.importer = Some(vec![]);
     }
 
-    module_node.importer.as_mut().unwrap().push(id.to_owned());
+    module_node.importer.as_mut().unwrap().push(root_id.clone());
 
-    let root_node = self.map.get_mut(id).unwrap();
+    let root_node = self.map.get_mut(&root_id.clone()).unwrap();
 
     if root_node.import.is_none() {
       root_node.import = Some(vec![]);
