@@ -1,10 +1,11 @@
-# import-analysis
+# import-analysis(WIP)
 
-A fast cli tool to help analyze javascript modules dependencies comprehensively.
+A fast tool that uses [swc](https://swc.rs/) to comprehensively analyze JavaScript/TypeScript modules dependencies.
 
 ## Features
 
--  Blazing fast modules' dependencies scanner
--  Readable scanning output (json & html)
--  Dependency network preview
--  Dependency diagnosis based on various rules
+- [ ] Blazing fast ESM/CJS modules scanner
+- [ ] Readable scanning output (json & html)
+- [ ] Interactive dependency network preview
+- [ ] Strict `import` diagnosis based on [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import) rules
+- [ ] Rich plugins support (vite, rollup, webpack)
