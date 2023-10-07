@@ -41,7 +41,7 @@ impl Parser {
   //   return self.parse_file(file);
   // }
 
-  pub fn parse(&self, file: &str) -> ImportNodeMap {
+  pub fn parse(&self, file: &str) -> HashMap<String, ImportNode> {
     let mut visitor = ImportVisitor::new();
 
     GLOBALS.set(&Globals::new(), || {
@@ -50,7 +50,7 @@ impl Parser {
 
       self.parse_file(file, &mut visitor);
 
-      visitor.import_node
+      visitor.import_node.map
     })
   }
 

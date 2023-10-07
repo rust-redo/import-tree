@@ -32,7 +32,7 @@ pub struct ImportNode {
 #[derive(Serialize, Debug)]
 pub struct ImportNodeMap {
   #[serde(flatten)]
-  map: HashMap<String, ImportNode>
+  pub(crate) map: HashMap<String, ImportNode>
 }
 
 impl ImportNodeMap {
