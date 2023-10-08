@@ -130,5 +130,6 @@ dist
 .pnp.*
 
 # cargo build
-target
-temp
+**/target
+**/temp
+**/*.node

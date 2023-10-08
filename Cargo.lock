@@ -239,6 +239,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "core"
+version = "0.0.0"
+dependencies = [
+ "napi",
+ "napi-build",
+ "napi-derive",
+ "parser",
+ "serde_json",
+]
+
+[[package]]
 name = "core-foundation-sys"
 version = "0.8.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -785,6 +796,12 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "napi-build"
+version = "2.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "882a73d9ef23e8dc2ebbffb6a6ae2ef467c0f18ac10711e4cc59c5485d41df0e"
 
 [[package]]
 name = "napi-derive"

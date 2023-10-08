@@ -1,0 +1,15 @@
+{
+  "name": "tests-darwin-universal",
+  "version": "0.0.0",
+  "os": [
+    "darwin"
+  ],
+  "main": "tests.darwin-universal.node",
+  "files": [
+    "tests.darwin-universal.node"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10"
+  }
+}
