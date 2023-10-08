@@ -1,27 +1,23 @@
-use oxc_resolver::{ResolveError, ResolveOptions, Resolver};
 use std::{path::Path, sync::Arc};
 use swc_ecmascript::{
   ast::{ImportDecl, ImportSpecifier},
   visit::{noop_visit_type, Visit},
 };
 
-use crate::node::{self, ImportLink, ImportLinkKind, ImportNode, ImportNodeKind, ImportNodeMap};
+use crate::{node::{self, ImportLink, ImportLinkKind, ImportNode, ImportNodeKind, ImportNodeMap}, resolver::{ImportResolver, BUILTINS}};
 
 pub(crate) struct ImportVisitor {
   pub(crate) import_node: ImportNodeMap,
   process_id: Option<String>,
-  resolver: Resolver,
+  pub(crate) resolver: ImportResolver,
 }
 
 impl ImportVisitor {
-  pub(crate) fn new() -> Self {
+  pub(crate) fn new(resolver: ImportResolver) -> Self {
     Self {
       import_node: ImportNodeMap::new(),
       process_id: None,
-      resolver: Resolver::new(ResolveOptions {
-        builtin_modules: true,
-        ..ResolveOptions::default()
-      }),
+      resolver
     }
   }
 
@@ -33,28 +29,8 @@ impl ImportVisitor {
     self.import_node.create_node(id);
   }
 
-  pub(crate) fn resolve(&self, root: &str, request: &str) -> ImportNode {
-    let path = Path::new(root).parent().unwrap_or_else(|| Path::new("/"));
-    let (id, kind) = match self.resolver.resolve(path, request) {
-      Ok(res) => (
-        res.full_path().to_string_lossy().to_string(),
-        ImportNodeKind::Local,
-      ),
-      Err(err) => match err {
-        ResolveError::Builtin(file_name) => (file_name, ImportNodeKind::Builtin),
-        _ => ("".to_owned(), ImportNodeKind::Local),
-      },
-    };
-
-    ImportNode {
-      id: Arc::new(id),
-      kind,
-      ..ImportNode::default()
-    }
-  }
-
   fn resolve_from_process_id(&self, request: &str) -> ImportNode {
-    self.resolve(self.process_id.as_ref().unwrap(), request)
+    self.resolver.resolve(self.process_id.as_ref().unwrap(), request)
   }
 
   fn insert_process_node_depent(&mut self, module: ImportNode) -> &mut ImportNode {

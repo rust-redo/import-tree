@@ -17,11 +17,14 @@ pub enum ImportLinkKind {
 }
 
 #[derive(Serialize, Debug, Default, Clone)]
-#[serde(rename_all = "camelCase")]
 pub enum ImportNodeKind {
   #[default]
+  #[serde(rename = "local")]
   Local,
+  #[serde(rename = "builtin")]
   Builtin,
+  #[serde(rename = "node_modules")]
+  NodeModules,
 }
 
 #[derive(Serialize, Debug, Clone)]

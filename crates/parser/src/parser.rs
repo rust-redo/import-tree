@@ -1,4 +1,4 @@
-use crate::{node::ImportNode, visitor::ImportVisitor};
+use crate::{node::ImportNode, visitor::ImportVisitor, resolver::ImportResolver};
 use std::{collections::HashMap, env, path::Path, sync::Arc};
 use swc_core::{
   base::{config::IsModule, Compiler},
@@ -36,9 +36,9 @@ impl Parser {
   //   return self.parse_file(file);
   // }
 
-  pub fn parse(&self, file: &str) -> HashMap<Arc<String>, ImportNode> {
-    let mut visitor = ImportVisitor::new();
-    let full_file = &visitor
+  pub fn parse(&self, file: &str, should_resolve: bool) -> HashMap<Arc<String>, ImportNode> {
+    let mut visitor = ImportVisitor::new(ImportResolver::new(should_resolve));
+    let full_file = &visitor.resolver
       .resolve(env::current_dir().unwrap().to_str().unwrap(), file)
       .id;
 
