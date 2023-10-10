@@ -1,6 +1,6 @@
 use std::{path::Path, sync::Arc};
 
-use oxc_resolver::{Resolution, ResolveError, ResolveOptions, Resolver};
+use oxc_resolver::{ResolveError, ResolveOptions, Resolver};
 
 use crate::node::{ImportNode, ImportNodeKind};
 
@@ -74,7 +74,7 @@ pub const BUILTINS: &[&str] = &[
 
 pub struct ImportResolver {
   resolver: Resolver,
-  should_resolve: bool
+  should_resolve: bool,
 }
 
 impl ImportResolver {
@@ -82,9 +82,10 @@ impl ImportResolver {
     Self {
       should_resolve,
       resolver: Resolver::new(ResolveOptions {
-      builtin_modules: true,
-      ..ResolveOptions::default()
-    }),}
+        builtin_modules: true,
+        ..ResolveOptions::default()
+      }),
+    }
   }
 
   pub(crate) fn resolve(&self, root: &str, request: &str) -> ImportNode {
@@ -95,7 +96,7 @@ impl ImportResolver {
         Err(err) => match err {
           // builtin module
           ResolveError::Builtin(file_name) => file_name,
-          _ => "".to_owned(),
+          _ => request.to_owned(),
         },
       }
     } else {
@@ -114,7 +115,7 @@ impl ImportResolver {
       return ImportNodeKind::NodeModules;
     }
 
-    if BUILTINS.contains(&id) {
+    if BUILTINS.contains(&id) || BUILTINS.contains(&id.replace("node:", "").as_str()) {
       return ImportNodeKind::Builtin;
     }
 

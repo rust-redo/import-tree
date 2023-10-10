@@ -7,8 +7,7 @@ export interface TransformOutput {
   code: string
   map?: string
 }
-export function sum(a: number, b: number): number
 export class Parser {
-  constructor()
+  constructor(root?: Buffer | undefined | null)
   parse(file: Buffer, shouldResolve: boolean): Buffer
 }

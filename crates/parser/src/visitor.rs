@@ -4,7 +4,10 @@ use swc_ecmascript::{
   visit::{noop_visit_type, Visit},
 };
 
-use crate::{node::{self, ImportLink, ImportLinkKind, ImportNode, ImportNodeKind, ImportNodeMap}, resolver::{ImportResolver, BUILTINS}};
+use crate::{
+  node::{self, ImportLink, ImportLinkKind, ImportNode, ImportNodeKind, ImportNodeMap},
+  resolver::{ImportResolver, BUILTINS},
+};
 
 pub(crate) struct ImportVisitor {
   pub(crate) import_node: ImportNodeMap,
@@ -17,7 +20,7 @@ impl ImportVisitor {
     Self {
       import_node: ImportNodeMap::new(),
       process_id: None,
-      resolver
+      resolver,
     }
   }
 
@@ -30,7 +33,9 @@ impl ImportVisitor {
   }
 
   fn resolve_from_process_id(&self, request: &str) -> ImportNode {
-    self.resolver.resolve(self.process_id.as_ref().unwrap(), request)
+    self
+      .resolver
+      .resolve(self.process_id.as_ref().unwrap(), request)
   }
 
   fn insert_process_node_depent(&mut self, module: ImportNode) -> &mut ImportNode {

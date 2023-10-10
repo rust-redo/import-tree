@@ -16,7 +16,7 @@ pub enum ImportLinkKind {
   Require,
 }
 
-#[derive(Serialize, Debug, Default, Clone)]
+#[derive(Serialize, Debug, Default, Clone, PartialEq, Eq)]
 pub enum ImportNodeKind {
   #[default]
   #[serde(rename = "local")]

@@ -8,19 +8,27 @@ extern crate napi_derive;
 
 #[napi]
 pub struct Parser {
-  parser: InternalParser
+  parser: InternalParser,
 }
 
 #[napi]
 impl Parser {
   #[napi(constructor)]
-  pub fn new() -> Self {
-    Self { parser: InternalParser::new() }
+  pub fn new(root: Option<Buffer>) -> Self {
+    Self {
+      parser: InternalParser::new(match root {
+        Some(buf) => Some(String::from_utf8_lossy(&buf).to_string()),
+        _ => None,
+      }),
+    }
   }
 
   #[napi]
   pub fn parse(&self, file: Buffer, should_resolve: bool) -> Buffer {
     let file = String::from_utf8_lossy(&file).to_string();
-    serde_json::to_string(&self.parser.parse(&file, should_resolve)).unwrap().as_bytes().into()
+    serde_json::to_string(&self.parser.parse(&file, should_resolve))
+      .unwrap()
+      .as_bytes()
+      .into()
   }
 }
