@@ -252,7 +252,6 @@ if (!nativeBinding) {
   throw new Error(`Failed to load native binding`)
 }
 
-const { sum, Parser } = nativeBinding
+const { Parser } = nativeBinding
 
-module.exports.sum = sum
 module.exports.Parser = Parser

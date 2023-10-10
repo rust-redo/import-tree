@@ -10,5 +10,5 @@ export interface TransformOutput {
 export function sum(a: number, b: number): number
 export class Parser {
   constructor()
-  parse(file: string, shouldResolve: boolean): void
+  parse(file: Buffer, shouldResolve: boolean): Buffer
 }

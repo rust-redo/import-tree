@@ -1,15 +1,9 @@
 import test from 'ava'
-import {join, dirname} from 'node:path'
-import { fileURLToPath } from 'node:url'
-
-import { sum, Parser } from '../index.js'
-
-const __dirname = dirname(fileURLToPath(import.meta.url))
-
-test('sum from native', (t) => {
-  t.is(sum(1, 2), 3)
-})
+import {getCodeFile, readParsedFile} from './utils.mjs'
+import { Parser } from '../index.js'
 
 const parser = new Parser()
+test('should parse es', (t) => {
+  t.deepEqual(JSON.parse(parser.parse(Buffer.from(getCodeFile("es.js")), true).toString()), readParsedFile('es.json', ['es.js']))
+})
 
-parser.parse(join(__dirname, "./fixture/es.js"), true)

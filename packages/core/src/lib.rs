@@ -1,14 +1,10 @@
 #![deny(clippy::all)]
 
+use napi::bindgen_prelude::Buffer;
 use parser::Parser as InternalParser;
 
 #[macro_use]
 extern crate napi_derive;
-
-#[napi]
-pub fn sum(a: i32, b: i32) -> i32 {
-  a + b
-}
 
 #[napi]
 pub struct Parser {
@@ -23,7 +19,8 @@ impl Parser {
   }
 
   #[napi]
-  pub fn parse(&self, file: String, should_resolve: bool) {
-    println!("{}", serde_json::to_string(&self.parser.parse(&file, should_resolve)).unwrap());
+  pub fn parse(&self, file: Buffer, should_resolve: bool) -> Buffer {
+    let file = String::from_utf8_lossy(&file).to_string();
+    serde_json::to_string(&self.parser.parse(&file, should_resolve)).unwrap().as_bytes().into()
   }
 }
