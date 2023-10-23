@@ -9,3 +9,7 @@ test('should parse es', (t) => {
   t.deepEqual(parse('es.js'), readParsedFile('es.json', ['es.js']))
 })
 
+test('should parse ts', (t) => {
+  t.deepEqual(parse("ts.ts"), readParsedFile('ts.json', ['ts.ts']))
+})
+

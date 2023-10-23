@@ -5,6 +5,7 @@ use serde::Serialize;
 #[derive(Serialize, Debug, Clone)]
 pub struct ImportSpecifier {
   pub name: String,
+  #[serde(rename = "as")]
   pub _as: String,
 }
 

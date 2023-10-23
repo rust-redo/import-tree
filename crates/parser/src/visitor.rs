@@ -74,8 +74,20 @@ impl Visit for ImportVisitor {
             name: name.clone(),
             _as: name,
           });
+        },
+        ImportSpecifier::Default(ref default_spec) => {
+          let _as = default_spec.local.sym.to_string();
+          ident.push(node::ImportSpecifier {
+            name: "default".into(),
+            _as
+          })
+        },
+        ImportSpecifier::Namespace(ref namespace) => {
+          ident.push(node::ImportSpecifier {
+            name: "*".into(),
+            _as: namespace.local.sym.to_string()
+          })
         }
-        _ => {}
       }
     }
 
