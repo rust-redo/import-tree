@@ -65,10 +65,13 @@ impl Visit for ImportVisitor {
 
     let imports = process_node.import.as_mut().unwrap();
     let mut ident: Vec<node::ImportSpecifier> = vec![];
-
     for spec in import.specifiers.iter() {
       match spec {
         ImportSpecifier::Named(ref named_spec) => {
+          if named_spec.is_type_only {
+            continue;
+          }
+
           let name = named_spec.local.sym.to_string();
           ident.push(node::ImportSpecifier {
             name: name.clone(),

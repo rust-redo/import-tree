@@ -133,3 +133,4 @@ dist
 **/target
 **/temp
 **/*.node
+**/__test__/**/*lock.json
