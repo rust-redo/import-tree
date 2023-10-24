@@ -15,6 +15,14 @@
     ],
     "import": null
   },
+  "os": {
+    "id": "os",
+    "type": "builtin",
+    "importer": [
+      "{es.js}"
+    ],
+    "import": null
+  },
   "{es.js}": {
     "id": "{es.js}",
     "type": "local",
@@ -45,15 +53,23 @@
           "name": "default",
           "as": "os"
         }]
+      },
+      {
+        "id": "{semver}",
+        "type": "static",
+        "ident": [{
+          "name": "parse",
+          "as": "parse"
+        }]
       }
     ]
   },
-  "os": {
-    "id": "os",
-    "type": "builtin",
+  "{semver}": {
+    "id": "{semver}",
+    "import": null,
     "importer": [
       "{es.js}"
     ],
-    "import": null
+    "type": "node_modules"
   }
 }
