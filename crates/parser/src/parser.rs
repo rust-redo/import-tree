@@ -17,6 +17,7 @@ use swc_core::{
     visit::{VisitMutWith, VisitWith},
   },
 };
+use swc_ecmascript::parser::{EsConfig, TsConfig};
 
 pub struct Parser {
   source_map: Arc<SourceMap>,
@@ -112,6 +113,14 @@ impl Parser {
   fn get_options(&self, file: &str) -> (Syntax, bool) {
     if file.ends_with(".ts") {
       return (Syntax::Typescript(Default::default()), true);
+    }
+
+    if file.ends_with(".tsx") {
+      return (Syntax::Typescript(TsConfig {tsx: true, ..Default::default()}), true);
+    }
+
+    if file.ends_with(".jsx") {
+      return (Syntax::Es(EsConfig {jsx: true, ..Default::default()}), false)
     }
 
     return (Syntax::default(), false);
