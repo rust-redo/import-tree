@@ -1,12 +1,11 @@
-use std::{path::Path, sync::Arc};
 use swc_ecmascript::{
   ast::{ImportDecl, ImportSpecifier},
   visit::{noop_visit_type, Visit},
 };
 
 use crate::{
-  node::{self, ImportLink, ImportLinkKind, ImportNode, ImportNodeKind, ImportNodeMap},
-  resolver::{ImportResolver, BUILTINS},
+  node::{self, ImportLink, ImportLinkKind, ImportNode, ImportNodeMap},
+  resolver::ImportResolver,
 };
 
 pub(crate) struct ImportVisitor {
