@@ -1,5 +1,5 @@
 {
-  "name": "tests-linux-arm-gnueabihf",
+  "name": "import-analysis.core-linux-arm-gnueabihf",
   "version": "0.0.0",
   "os": [
     "linux"
@@ -7,9 +7,9 @@
   "cpu": [
     "arm"
   ],
-  "main": "tests.linux-arm-gnueabihf.node",
+  "main": "import-analysis.core.linux-arm-gnueabihf.node",
   "files": [
-    "tests.linux-arm-gnueabihf.node"
+    "import-analysis.core.linux-arm-gnueabihf.node"
   ],
   "license": "MIT",
   "engines": {

@@ -1,3 +1,3 @@
-# `tests-win32-arm64-msvc`
+# `import-analysis.core-win32-arm64-msvc`
 
-This is the **aarch64-pc-windows-msvc** binary for `tests`
+This is the **aarch64-pc-windows-msvc** binary for `import-analysis.core`

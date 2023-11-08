@@ -1,3 +1,3 @@
-# `tests-win32-x64-msvc`
+# `import-analysis.core-win32-x64-msvc`
 
-This is the **x86_64-pc-windows-msvc** binary for `tests`
+This is the **x86_64-pc-windows-msvc** binary for `import-analysis.core`

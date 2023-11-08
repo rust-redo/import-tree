@@ -1,3 +1,3 @@
-# `tests-android-arm64`
+# `import-analysis.core-android-arm64`
 
-This is the **aarch64-linux-android** binary for `tests`
+This is the **aarch64-linux-android** binary for `import-analysis.core`

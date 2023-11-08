@@ -1,3 +1,3 @@
-# `tests-linux-x64-musl`
+# `import-analysis.core-linux-x64-musl`
 
-This is the **x86_64-unknown-linux-musl** binary for `tests`
+This is the **x86_64-unknown-linux-musl** binary for `import-analysis.core`

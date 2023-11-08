@@ -1,5 +1,5 @@
 {
-  "name": "tests-android-arm64",
+  "name": "import-analysis.core-android-arm64",
   "version": "0.0.0",
   "os": [
     "android"
@@ -7,9 +7,9 @@
   "cpu": [
     "arm64"
   ],
-  "main": "tests.android-arm64.node",
+  "main": "import-analysis.core.android-arm64.node",
   "files": [
-    "tests.android-arm64.node"
+    "import-analysis.core.android-arm64.node"
   ],
   "license": "MIT",
   "engines": {

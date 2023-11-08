@@ -1,6 +1,6 @@
 [package]
 edition = "2021"
-name = "core"
+name = "import-analysis-core"
 version = "0.0.0"
 
 [lib]

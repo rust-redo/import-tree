@@ -1,3 +1,3 @@
-# `tests-freebsd-x64`
+# `import-analysis.core-freebsd-x64`
 
-This is the **x86_64-unknown-freebsd** binary for `tests`
+This is the **x86_64-unknown-freebsd** binary for `import-analysis.core`

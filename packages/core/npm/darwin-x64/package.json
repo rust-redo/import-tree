@@ -1,5 +1,5 @@
 {
-  "name": "tests-darwin-x64",
+  "name": "import-analysis.core-darwin-x64",
   "version": "0.0.0",
   "os": [
     "darwin"
@@ -7,9 +7,9 @@
   "cpu": [
     "x64"
   ],
-  "main": "tests.darwin-x64.node",
+  "main": "import-analysis.core.darwin-x64.node",
   "files": [
-    "tests.darwin-x64.node"
+    "import-analysis.core.darwin-x64.node"
   ],
   "license": "MIT",
   "engines": {

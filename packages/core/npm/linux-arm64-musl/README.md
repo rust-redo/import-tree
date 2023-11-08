@@ -1,3 +1,3 @@
-# `tests-linux-arm64-musl`
+# `import-analysis.core-linux-arm64-musl`
 
-This is the **aarch64-unknown-linux-musl** binary for `tests`
+This is the **aarch64-unknown-linux-musl** binary for `import-analysis.core`

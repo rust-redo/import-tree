@@ -1,5 +1,5 @@
 {
-  "name": "tests-linux-x64-musl",
+  "name": "import-analysis.core-linux-x64-musl",
   "version": "0.0.0",
   "os": [
     "linux"
@@ -7,9 +7,9 @@
   "cpu": [
     "x64"
   ],
-  "main": "tests.linux-x64-musl.node",
+  "main": "import-analysis.core.linux-x64-musl.node",
   "files": [
-    "tests.linux-x64-musl.node"
+    "import-analysis.core.linux-x64-musl.node"
   ],
   "license": "MIT",
   "engines": {

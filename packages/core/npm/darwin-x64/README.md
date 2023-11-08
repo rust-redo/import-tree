@@ -1,3 +1,3 @@
-# `tests-darwin-x64`
+# `import-analysis.core-darwin-x64`
 
-This is the **x86_64-apple-darwin** binary for `tests`
+This is the **x86_64-apple-darwin** binary for `import-analysis.core`

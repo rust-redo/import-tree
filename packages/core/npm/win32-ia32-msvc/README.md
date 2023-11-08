@@ -1,3 +1,3 @@
-# `tests-win32-ia32-msvc`
+# `import-analysis.core-win32-ia32-msvc`
 
-This is the **i686-pc-windows-msvc** binary for `tests`
+This is the **i686-pc-windows-msvc** binary for `import-analysis.core`
