@@ -74,7 +74,7 @@ pub const BUILTINS: &[&str] = &[
 
 pub struct ImportResolver {
   resolver: Resolver,
-  should_resolve: bool,
+  pub(crate) should_resolve: bool,
 }
 
 impl ImportResolver {
@@ -88,10 +88,24 @@ impl ImportResolver {
     }
   }
 
-  pub(crate) fn resolve(&self, root: &str, request: &str) -> ImportNode {
-    let path = Path::new(root).parent().unwrap_or_else(|| Path::new("/"));
+  pub(crate) fn resolve_file(&self, root: &str, file: &str) -> Arc<String> {
+    let file_path = Path::new(file);
+
+    Arc::new(if file_path.is_absolute() {
+      file.to_owned()
+    } else {
+      Path::new(root)
+        .join(file_path)
+        .to_str()
+        .unwrap()
+        .to_string()
+    })
+  }
+
+  pub(crate) fn resolve_module(&self, root: &str, request: &str) -> ImportNode {
+    let root_path = Path::new(root).parent().unwrap_or_else(|| Path::new("/"));
     let id = if self.should_resolve {
-      match self.resolver.resolve(path, request) {
+      match self.resolver.resolve(root_path, request) {
         Ok(res) => res.full_path().to_string_lossy().to_string(),
         Err(err) => match err {
           // builtin module
@@ -111,12 +125,12 @@ impl ImportResolver {
   }
 
   fn get_node_kind(&self, id: &str) -> ImportNodeKind {
-    if id.contains("/node_modules/") {
-      return ImportNodeKind::NodeModules;
-    }
-
     if BUILTINS.contains(&id) || BUILTINS.contains(&id.replace("node:", "").as_str()) {
       return ImportNodeKind::Builtin;
+    }
+
+    if id.contains("/node_modules/") || !id.starts_with('.') {
+      return ImportNodeKind::NodeModules;
     }
 
     ImportNodeKind::Local

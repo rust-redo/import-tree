@@ -34,7 +34,7 @@ impl ImportVisitor {
   fn resolve_from_process_id(&self, request: &str) -> ImportNode {
     self
       .resolver
-      .resolve(self.process_id.as_ref().unwrap(), request)
+      .resolve_module(self.process_id.as_ref().unwrap(), request)
   }
 
   fn insert_process_node_depent(&mut self, module: ImportNode) -> &mut ImportNode {
@@ -76,20 +76,18 @@ impl Visit for ImportVisitor {
             name: name.clone(),
             _as: name,
           });
-        },
+        }
         ImportSpecifier::Default(ref default_spec) => {
           let _as = default_spec.local.sym.to_string();
           ident.push(node::ImportSpecifier {
             name: "default".into(),
-            _as
-          })
-        },
-        ImportSpecifier::Namespace(ref namespace) => {
-          ident.push(node::ImportSpecifier {
-            name: "*".into(),
-            _as: namespace.local.sym.to_string()
+            _as,
           })
         }
+        ImportSpecifier::Namespace(ref namespace) => ident.push(node::ImportSpecifier {
+          name: "*".into(),
+          _as: namespace.local.sym.to_string(),
+        }),
       }
     }
 

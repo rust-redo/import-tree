@@ -24,9 +24,9 @@ impl Parser {
   }
 
   #[napi]
-  pub fn parse(&self, file: Buffer, should_resolve: bool) -> Buffer {
+  pub fn parse(&self, file: Buffer, should_recursion: bool, should_resolve: bool) -> Buffer {
     let file = String::from_utf8_lossy(&file).to_string();
-    serde_json::to_string(&self.parser.parse(&file, should_resolve))
+    serde_json::to_string(&self.parser.parse(&file, should_recursion, should_resolve))
       .unwrap()
       .as_bytes()
       .into()

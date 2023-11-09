@@ -41,18 +41,17 @@ impl Parser {
     }
   }
 
-  /// parse signle file and its dependency
-  // pub fn parse_file_with_dependency(&self, file: &str) {
-  //   return self.parse_file(file);
-  // }
-
-  pub fn parse(&self, file: &str, should_resolve: bool) -> HashMap<Arc<String>, ImportNode> {
+  pub fn parse(
+    &self,
+    file: &str,
+    should_recursion: bool,
+    should_resolve: bool,
+  ) -> HashMap<Arc<String>, ImportNode> {
     let mut visitor = ImportVisitor::new(ImportResolver::new(should_resolve));
-    let resolved_file = &visitor.resolver.resolve(&self.root, file).id;
 
     GLOBALS.set(&Globals::new(), || {
       let mut visited_files: Vec<Arc<String>> = vec![];
-      self.recursion_parse(resolved_file, &mut visitor, &mut visited_files);
+      self.recursion_parse(file, &mut visitor, &mut visited_files, should_recursion);
 
       visitor.import_node.map
     })
@@ -60,15 +59,26 @@ impl Parser {
 
   fn recursion_parse<'a>(
     &self,
-    resolved_file: &Arc<String>,
+    file: &str,
     visitor: &mut ImportVisitor,
     visited_files: &mut Vec<Arc<String>>,
+    should_recursion: bool,
   ) {
-    visitor.set_process_id(resolved_file);
-    visitor.create_node(resolved_file);
+    let resolved_file = &visitor.resolver.resolve_file(&self.root, file);
+    let process_id = if visitor.resolver.should_resolve {
+      resolved_file
+    } else {
+      file
+    };
+    visitor.set_process_id(process_id);
+    visitor.create_node(process_id);
     visited_files.push(resolved_file.clone());
 
     self.parse_file(resolved_file, visitor);
+
+    if !should_recursion {
+      return;
+    }
 
     // https://docs.rs/im/latest/im/hashmap/struct.HashMap.html#impl-Clone
     // Hashmap.clone is a shallow clone, so it won't impact performance
@@ -78,7 +88,7 @@ impl Parser {
       if visited_files.contains(&id) || node.kind != ImportNodeKind::Local {
         continue;
       }
-      self.recursion_parse(&id, visitor, visited_files);
+      self.recursion_parse(&id, visitor, visited_files, true);
     }
   }
 
@@ -107,7 +117,6 @@ impl Parser {
 
     let module = program.expect_module();
     module.visit_with(visitor);
-    // })
   }
 
   fn get_options(&self, file: &str) -> (Syntax, bool) {
@@ -116,11 +125,23 @@ impl Parser {
     }
 
     if file.ends_with(".tsx") {
-      return (Syntax::Typescript(TsConfig {tsx: true, ..Default::default()}), true);
+      return (
+        Syntax::Typescript(TsConfig {
+          tsx: true,
+          ..Default::default()
+        }),
+        true,
+      );
     }
 
     if file.ends_with(".jsx") {
-      return (Syntax::Es(EsConfig {jsx: true, ..Default::default()}), false)
+      return (
+        Syntax::Es(EsConfig {
+          jsx: true,
+          ..Default::default()
+        }),
+        false,
+      );
     }
 
     return (Syntax::default(), false);
