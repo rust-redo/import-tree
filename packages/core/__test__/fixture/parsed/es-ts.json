@@ -3,7 +3,7 @@
     "id": "fs",
     "type": "builtin",
     "importer": [
-      "{ts.ts}"
+      "{es.ts}"
     ],
     "import": null
   },
@@ -11,12 +11,12 @@
     "id": "path",
     "type": "builtin",
     "importer": [
-      "{ts.ts}"
+      "{es.ts}"
     ],
     "import": null
   },
-  "{ts.ts}": {
-    "id": "{ts.ts}",
+  "{es.ts}": {
+    "id": "{es.ts}",
     "type": "local",
     "importer": null,
     "import": [
@@ -52,7 +52,7 @@
     "id": "os",
     "type": "builtin",
     "importer": [
-      "{ts.ts}"
+      "{es.ts}"
     ],
     "import": null
   }

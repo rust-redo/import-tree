@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use swc_ecmascript::{
   ast::{ImportDecl, ImportSpecifier},
   visit::{noop_visit_type, Visit},
@@ -27,8 +29,11 @@ impl ImportVisitor {
     self.process_id = Some(id.to_owned());
   }
 
+  /// insert node if not exist
   pub(crate) fn create_node(&mut self, id: &str) {
-    self.import_node.create_node(id);
+    if self.import_node.map.get_mut(&Arc::new(id.to_string())).is_none() {
+      self.import_node.create_node(id);
+    }
   }
 
   fn resolve_from_process_id(&self, request: &str) -> ImportNode {

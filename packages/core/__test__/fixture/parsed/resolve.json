@@ -1,0 +1,91 @@
+{
+    "fs": {
+      "id": "fs",
+      "type": "builtin",
+      "importer": [
+        "{resolve.js}"
+      ],
+      "import": null
+    },
+    "path": {
+      "id": "path",
+      "type": "builtin",
+      "importer": [
+        "{resolve.js}"
+      ],
+      "import": null
+    },
+    "os": {
+      "id": "os",
+      "type": "builtin",
+      "importer": [
+        "{resolve.js}"
+      ],
+      "import": null
+    },
+    "{resolve.js}": {
+      "id": "{resolve.js}",
+      "type": "local",
+      "importer": null,
+      "import": [
+        {
+          "id": "fs",
+          "type": "static",
+          "ident": [
+            {
+              "name": "read",
+              "as": "read"
+            }
+          ]
+        },
+        {
+          "id": "path",
+          "type": "static",
+          "ident": [{
+            "name": "*",
+            "as": "Path"
+          }]
+        },
+        {
+          "id": "os",
+          "type": "static",
+          "ident": [{
+            "name": "default",
+            "as": "os"
+          }]
+        },
+        {
+          "id": "{semver}",
+          "type": "static",
+          "ident": [{
+            "name": "parse",
+            "as": "parse"
+          }]
+        },
+        {
+          "id": "{foo.js}",
+          "type": "static",
+          "ident": [{
+            "name": "foo",
+            "as": "foo"
+          }]
+        }
+      ]
+    },
+    "{semver}": {
+      "id": "{semver}",
+      "import": null,
+      "importer": [
+        "{resolve.js}"
+      ],
+      "type": "node_modules"
+    },
+    "{foo.js}": {
+      "id": "{foo.js}",
+      "import": null,
+      "importer": [
+        "{resolve.js}"
+      ],
+      "type": "local"
+    }
+  }

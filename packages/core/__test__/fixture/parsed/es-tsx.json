@@ -3,7 +3,7 @@
     "id": "fs",
     "type": "builtin",
     "importer": [
-      "{ts.tsx}"
+      "{es.tsx}"
     ],
     "import": null
   },
@@ -11,7 +11,7 @@
     "id": "path",
     "type": "builtin",
     "importer": [
-      "{ts.tsx}"
+      "{es.tsx}"
     ],
     "import": null
   },
@@ -19,12 +19,12 @@
     "id": "os",
     "type": "builtin",
     "importer": [
-      "{ts.tsx}"
+      "{es.tsx}"
     ],
     "import": null
   },
-  "{ts.tsx}": {
-    "id": "{ts.tsx}",
+  "{es.tsx}": {
+    "id": "{es.tsx}",
     "type": "local",
     "importer": null,
     "import": [
@@ -76,7 +76,7 @@
     "id": "{semver}",
     "import": null,
     "importer": [
-      "{ts.tsx}"
+      "{es.tsx}"
     ],
     "type": "node_modules"
   },
@@ -84,7 +84,7 @@
     "id": "{react}",
     "import": null,
     "importer": [
-      "{ts.tsx}"
+      "{es.tsx}"
     ],
     "type": "node_modules"
   }

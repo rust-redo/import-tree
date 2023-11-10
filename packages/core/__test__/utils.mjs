@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { Parser } from '../index.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -16,3 +17,4 @@ export const readParsedFile = (file, codeFiles = {}, nodeModules = {}, resolve =
   })
   return JSON.parse(content)
 }
+export const parser = new Parser({ root: join(process.cwd(), '__test__/fixture/code') })

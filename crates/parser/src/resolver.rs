@@ -118,18 +118,18 @@ impl ImportResolver {
     };
 
     ImportNode {
-      kind: self.get_node_kind(&id),
+      kind: self.get_node_kind(&id, &request),
       id: Arc::new(id),
       ..ImportNode::default()
     }
   }
 
-  fn get_node_kind(&self, id: &str) -> ImportNodeKind {
+  fn get_node_kind(&self, id: &str, request: &str) -> ImportNodeKind {
     if BUILTINS.contains(&id) || BUILTINS.contains(&id.replace("node:", "").as_str()) {
       return ImportNodeKind::Builtin;
     }
 
-    if id.contains("/node_modules/") || !id.starts_with('.') {
+    if id.contains("/node_modules/") || (!id.starts_with('.') && !request.starts_with('.')) {
       return ImportNodeKind::NodeModules;
     }
 

@@ -51,7 +51,7 @@ impl Parser {
 
     GLOBALS.set(&Globals::new(), || {
       let mut visited_files: Vec<Arc<String>> = vec![];
-      self.recursion_parse(file, &mut visitor, &mut visited_files, should_recursion);
+      self.recursion_parse(file, &mut visitor, &mut visited_files, should_resolve && should_recursion);
 
       visitor.import_node.map
     })

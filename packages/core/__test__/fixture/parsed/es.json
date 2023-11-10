@@ -53,23 +53,7 @@
           "name": "default",
           "as": "os"
         }]
-      },
-      {
-        "id": "{semver}",
-        "type": "static",
-        "ident": [{
-          "name": "parse",
-          "as": "parse"
-        }]
       }
     ]
-  },
-  "{semver}": {
-    "id": "{semver}",
-    "import": null,
-    "importer": [
-      "{es.js}"
-    ],
-    "type": "node_modules"
   }
 }
