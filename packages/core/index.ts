@@ -9,14 +9,14 @@ export class Parser {
   parse(
     file: string, 
     {
-      recursion = true,
-      resolve = true
+      depth,
+      resolve,
     }: {
-      recursion?: boolean,
+      depth?: number,
       resolve?: boolean
     } = {}
     ) {
-    return JSON.parse(this.parser.parse(Buffer.from(file), recursion, resolve).toString())
+    return JSON.parse(this.parser.parse(Buffer.from(file), depth, resolve).toString())
   }
 }
 

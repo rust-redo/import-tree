@@ -44,14 +44,16 @@ impl Parser {
   pub fn parse(
     &self,
     file: &str,
-    should_recursion: bool,
-    should_resolve: bool,
+    depth: Option<u8>,
+    should_resolve: Option<bool>,
   ) -> HashMap<Arc<String>, ImportNode> {
-    let mut visitor = ImportVisitor::new(ImportResolver::new(should_resolve));
+    let wrapped_depth = depth.unwrap_or(2);
+    let wrapped_should_resolve = should_resolve.unwrap_or(true);
+    let mut visitor = ImportVisitor::new(ImportResolver::new(wrapped_should_resolve));
 
     GLOBALS.set(&Globals::new(), || {
       let mut visited_files: Vec<Arc<String>> = vec![];
-      self.recursion_parse(file, &mut visitor, &mut visited_files, should_resolve && should_recursion);
+      self.recursion_parse(file, &mut visitor, &mut visited_files, if wrapped_should_resolve {wrapped_depth} else { 1 });
 
       visitor.import_node.map
     })
@@ -62,8 +64,12 @@ impl Parser {
     file: &str,
     visitor: &mut ImportVisitor,
     visited_files: &mut Vec<Arc<String>>,
-    should_recursion: bool,
+    depth: u8,
   ) {
+    if depth < 1 {
+      return;
+    }
+
     let resolved_file = &visitor.resolver.resolve_file(&self.root, file);
     let process_id = if visitor.resolver.should_resolve {
       resolved_file
@@ -76,10 +82,6 @@ impl Parser {
 
     self.parse_file(resolved_file, visitor);
 
-    if !should_recursion {
-      return;
-    }
-
     // https://docs.rs/im/latest/im/hashmap/struct.HashMap.html#impl-Clone
     // Hashmap.clone is a shallow clone, so it won't impact performance
     let map = visitor.import_node.map.clone();
@@ -88,7 +90,7 @@ impl Parser {
       if visited_files.contains(&id) || node.kind != ImportNodeKind::Local {
         continue;
       }
-      self.recursion_parse(&id, visitor, visited_files, true);
+      self.recursion_parse(&id, visitor, visited_files, depth - 1 );
     }
   }
 

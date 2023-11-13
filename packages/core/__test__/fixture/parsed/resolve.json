@@ -69,6 +69,14 @@
             "name": "foo",
             "as": "foo"
           }]
+        },
+        {
+          "id": "{bar.js}",
+          "type": "static",
+          "ident": [{
+            "name": "bar",
+            "as": "bar"
+          }]
         }
       ]
     },
@@ -80,11 +88,29 @@
       ],
       "type": "node_modules"
     },
+    "{bar.js}": {
+      "id": "{bar.js}",
+      "import": [
+        {
+          "id": "{foo.js}",
+          "type": "static",
+          "ident": [{
+            "name": "foo",
+            "as": "foo"
+          }]
+        }
+      ],
+      "importer": [
+        "{resolve.js}"
+      ],
+      "type": "local"
+    },
     "{foo.js}": {
       "id": "{foo.js}",
       "import": null,
       "importer": [
-        "{resolve.js}"
+        "{resolve.js}",
+        "{bar.js}"
       ],
       "type": "local"
     }
