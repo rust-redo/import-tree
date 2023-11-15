@@ -140,3 +140,6 @@ packages/core/core.js
 packages/core/core.d.ts
 packages/core/index.d.ts
 packages/core/index.js
+
+# external git repo
+repos

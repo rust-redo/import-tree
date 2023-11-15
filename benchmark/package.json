@@ -1,0 +1,13 @@
+{
+  "name": "import-analysis.benchmark",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "bench": "node index.mjs"
+  },
+  "devDependencies": {
+    "import-analysis.core": "workspace:*",
+    "tinybench": "^2.5.1"
+  }
+}

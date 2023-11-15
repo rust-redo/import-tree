@@ -83,6 +83,7 @@ impl ImportResolver {
       should_resolve,
       resolver: Resolver::new(ResolveOptions {
         builtin_modules: true,
+        extensions: vec![".js".to_string(), ".ts".to_string()],
         ..ResolveOptions::default()
       }),
     }

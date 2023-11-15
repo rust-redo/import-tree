@@ -5,9 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "cd packages/core/__test__/fixture/code && npm i"
+    "postinstall": "cd packages/core/__test__/fixture/code && npm i",
+    "repos": "node scripts/git-repo.mjs",
+    "bench": "pnpm --filter \"*bench*\" run bench",
+    "build:npm": "pnpm --filter \"{packages/**}\" run build"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "debug": "^4.3.1",
+    "simple-git": "^3.20.0"
+  }
 }
