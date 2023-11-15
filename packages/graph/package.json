@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@iconify-json/carbon": "^1.1.21",
     "@preact/preset-vite": "^2.5.0",
     "@unocss/reset": "^0.57.3",
     "import-analysis.core": "workspace:*",
