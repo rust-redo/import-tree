@@ -12,6 +12,7 @@
     "@iconify-json/carbon": "^1.1.21",
     "@preact/preset-vite": "^2.5.0",
     "@unocss/reset": "^0.57.3",
+    "echarts": "^5.4.3",
     "import-analysis.core": "workspace:*",
     "preact": "^10.16.0",
     "typescript": "^5.0.2",
