@@ -9,9 +9,9 @@ A super fast tool that uses [swc](https://swc.rs/) to build JavaScript/TypeScrip
 ## Features
 
 - :zap: Blazing fast ESM/CJS modules scanner
+- :rainbow: Interactive module relation graph view
 - :hammer_and_pick: Strict `import` diagnosis based on [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import) rules [todo]
 - :herb: Rich plugins support (vite, rollup, webpack) [todo]
-
 
 ## Usage
 
@@ -38,5 +38,24 @@ Binaries:
 |---|----|-----|----|----|----|---|
 |[axios@1.6.2](https://github.com/axios/axios/tree/v1.6.2)|`.js`|59|132|3|81|**12**,249,262.50|
 |[rxjs@8.0.0-alpha.12](https://github.com/ReactiveX/rxjs/tree/8.0.0-alpha.12)|`.ts`|205|877|3|2|**351**,465,279.17|
+
+## Roadmap
+
+### v0.1.x [WIP]
+
+- `rust parser`
+  - construct import tree with specific depth
+  - parse esm static `import/export` syntax
+  - resolve internal/external module path
+  - compute circular dependencies
+  - handle exception robustly 
+- `npm core`
+  - cross-platform fast Nodejs api
+- `npm cli`
+  - output import tree in json & html format
+  - check circular dependencies
+- `module graph`
+  - graph chart renderer :heavy_check_mark:	
+  - dark mode :heavy_check_mark:	
 
 
