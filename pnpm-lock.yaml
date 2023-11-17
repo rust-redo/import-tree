@@ -24,6 +24,22 @@ importers:
         specifier: ^2.5.1
         version: 2.5.1
 
+  packages/cli:
+    dependencies:
+      commander:
+        specifier: ^11.1.0
+        version: 11.1.0
+      import-analysis.core:
+        specifier: workspace:*
+        version: link:../core
+    devDependencies:
+      '@types/node':
+        specifier: ^20.9.0
+        version: 20.9.0
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
   packages/core:
     devDependencies:
       '@napi-rs/cli':
@@ -35,6 +51,9 @@ importers:
       ava:
         specifier: ^5.1.1
         version: 5.3.1
+      fast-glob:
+        specifier: ^3.3.2
+        version: 3.3.2
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -47,9 +66,15 @@ importers:
       '@preact/preset-vite':
         specifier: ^2.5.0
         version: 2.6.0(@babel/core@7.23.3)(preact@10.19.1)(vite@4.5.0)
+      '@types/d3-hierarchy':
+        specifier: ^3.1.6
+        version: 3.1.6
       '@unocss/reset':
         specifier: ^0.57.3
         version: 0.57.3
+      d3-hierarchy:
+        specifier: ^3.1.2
+        version: 3.1.2
       echarts:
         specifier: ^5.4.3
         version: 5.4.3
@@ -697,6 +722,10 @@ packages:
       picomatch: 2.3.1
     dev: true
 
+  /@types/d3-hierarchy@3.1.6:
+    resolution: {integrity: sha512-qlmD/8aMk5xGorUvTUWHCiumvgaUXYldYjNVOWtYoTYY/L+WwIEAmJxUmTgr9LoGNG0PPAOmqMDJVDPc7DOpPw==}
+    dev: true
+
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
     dev: true
@@ -1209,6 +1238,11 @@ packages:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
     dev: true
 
+  /commander@11.1.0:
+    resolution: {integrity: sha512-yPVavfyCcRhmorC7rWlkHn15b4wDVgVmBA7kV4QVBsF7kv/9TKJAbAXVTxvTnwP8HHKjRCJDClKbciiYS7p0DQ==}
+    engines: {node: '>=16'}
+    dev: false
+
   /common-path-prefix@3.0.0:
     resolution: {integrity: sha512-QE33hToZseCH3jS0qN96O/bSh3kaw/h+Tq7ngyY9eWDUnTlTNUyqfqvCXioLe5Na5jFsL78ra/wuBU4iuEgd4w==}
     dev: true
@@ -1263,6 +1297,11 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       array-find-index: 1.0.2
+    dev: true
+
+  /d3-hierarchy@3.1.2:
+    resolution: {integrity: sha512-FX/9frcub54beBdugHjDCdikxThEqjnR93Qt7PvQTOHxyiNCAlvMrHhclk3cD5VeAaq9fxmfRp+CnWw9rEMBuA==}
+    engines: {node: '>=12'}
     dev: true
 
   /date-time@3.1.0:
