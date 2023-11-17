@@ -15,7 +15,7 @@ A fast tool that uses [swc](https://swc.rs/) to comprehensively analyze JavaScri
 
 `import-analysis` is not only a cli tool, you can also use it as a JavaScript API or a specific bundler plugin.
 
-## Benchmark & Demo
+## Benchmark
 
 `import-analysis` tested its Nodejs api's benchmark in multiple popular third-party git repos.
 
@@ -32,9 +32,9 @@ Binaries:
   pnpm: 8.8.0 
 ```
 
-|repo|total files|import links|depth|ops/sec|average time(ns)|
-|---|----|-----|----|----|----|
-|[axios@1.6.2](https://github.com/axios/axios/tree/v1.6.2)|59|132|3|81|**12**,249,262.50|
-|[rxjs@8.0.0-alpha.12](https://github.com/ReactiveX/rxjs/tree/8.0.0-alpha.12)|205|877|3|2|**351**,465,279.17|
+|repo|file type|total files|import links|import depth|ops/sec|average time(ns)|
+|---|----|-----|----|----|----|---|
+|[axios@1.6.2](https://github.com/axios/axios/tree/v1.6.2)|`.js`|59|132|3|81|**12**,249,262.50|
+|[rxjs@8.0.0-alpha.12](https://github.com/ReactiveX/rxjs/tree/8.0.0-alpha.12)|`.ts`|205|877|3|2|**351**,465,279.17|
 
 
