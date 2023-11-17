@@ -1,14 +1,16 @@
+<p align="left">
+  <img src="https://github.com/rust-redo/import-analysis/assets/102238922/56ef774d-6ed0-4491-afab-93fbeba9e955" >
+</p>
+
 # import-analysis(WIP)
 
-A fast tool that uses [swc](https://swc.rs/) to comprehensively analyze JavaScript/TypeScript modules dependencies.
+A super fast tool that uses [swc](https://swc.rs/) to build JavaScript/TypeScript module `import/require`-relation tree.
 
 ## Features
 
-- [ ] Blazing fast ESM/CJS modules scanner
-- [ ] Readable scanning output (json & html)
-- [ ] Interactive dependency network preview
-- [ ] Strict `import` diagnosis based on [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import) rules
-- [ ] Rich plugins support (vite, rollup, webpack)
+- :zap: Blazing fast ESM/CJS modules scanner
+- :hammer_and_pick: Strict `import` diagnosis based on [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import) rules [todo]
+- :herb: Rich plugins support (vite, rollup, webpack) [todo]
 
 
 ## Usage
