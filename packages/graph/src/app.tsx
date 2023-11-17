@@ -1,17 +1,13 @@
 import type { ComponentChild } from 'preact'
-import { useEffect, useRef, useState } from 'preact/hooks'
+import { useContext, useEffect, useRef } from 'preact/hooks'
 import { use, init as echartsInit } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { GraphChart } from 'echarts/charts'
-import type {
-  SingleAxisComponentOption,
-  TooltipComponentOption,
-} from 'echarts/components'
 import {
   LegendComponent,
   TooltipComponent,
 } from 'echarts/components'
-import { useDark, useGlobalStyle, useGraph } from './hooks'
+import { Context, useDark, useGlobalStyle, useGraph } from './hooks'
 
 use([
   CanvasRenderer,
@@ -22,12 +18,13 @@ use([
 
 export function App() {
   useGlobalStyle();
+  const [dark, setDark] = useDark()
 
   return (
-    <>
+    <Context.Provider value={{ dark, actions: {setDark} }}>
       <NavBar />
       <ImportGraph />
-    </>
+    </Context.Provider>
   )
 }
 
@@ -48,8 +45,9 @@ function Button({
 
 
 function NavBar() {
-  const [_, setDark] = useDark()
-  return <div className="bg-primary">
+  const {actions: {setDark}} = useContext(Context)
+  return <div className="bg-primary flex flex-justify-between flex-items-center p-x-6">
+    <h2 className="text-primary">{window.repoName}</h2>
     <Button
       className="i-carbon-sun dark:i-carbon-moon important-w-[2rem] important-h-[2rem] text-primary"
       onClick={() => setDark(dark => !dark)}
@@ -58,15 +56,19 @@ function NavBar() {
 }
 
 function ImportGraph() {
-  const chartRef = useRef(null)
+  const chartRef = useRef<HTMLDivElement>(null)
   const chartInstanceRef = useRef<ReturnType<typeof echartsInit> | null>(null)
-  const {option} = useGraph()
-  
+  const chartRect = chartRef.current ? chartRef.current.getBoundingClientRect() : { width: 0, height: 0 }
+  const { option } = useGraph(
+    { x: chartRect.width / 2, y: chartRect.height / 2 }
+  )
+
   useEffect(() => {
     chartInstanceRef.current = echartsInit(chartRef.current)
   }, [])
 
   useEffect(() => {
+    // chartInstanceRef.current?.clear()
     chartInstanceRef.current?.setOption(option)
   }, [option, chartInstanceRef.current])
 
