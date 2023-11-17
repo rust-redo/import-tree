@@ -1,4 +1,4 @@
-use std::{collections::HashMap, sync::Arc};
+use std::{collections::{HashMap, HashSet}, sync::Arc};
 
 use serde::Serialize;
 
@@ -111,7 +111,7 @@ pub struct ImportNode {
   pub id: Arc<String>,
   #[serde(rename = "type")]
   pub kind: ImportNodeKind,
-  pub importer: Option<Vec<Arc<String>>>,
+  pub importer: Option<HashSet<Arc<String>>>,
   pub import: Option<Vec<ImportLink>>,
 }
 
@@ -167,10 +167,10 @@ impl ImportNodeMap {
     };
 
     if module_node.importer.is_none() {
-      module_node.importer = Some(vec![]);
+      module_node.importer = Some(HashSet::new());
     }
 
-    module_node.importer.as_mut().unwrap().push(root_id.clone());
+    module_node.importer.as_mut().unwrap().insert(root_id.clone());
 
     let root_node = self.map.get_mut(&root_id.clone()).unwrap();
 

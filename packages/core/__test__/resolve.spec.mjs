@@ -2,17 +2,29 @@ import test from 'ava'
 import { getCodeFile, parser, readParsedFile } from './utils.mjs'
 
 test('should parse with resolve and recursion', (t) => {
+  const importJson =  readParsedFile(
+    'resolve.json',
+    { 
+      'resolve.js': 'resolve.js',
+      'foo.js': 'nested/foo.js',
+      'bar.js': 'nested/bar.js',
+    },
+    { semver: 'semver/index.js' }
+  )
+  const parsedTree = parser.parse('resolve.js', {depth: 3})
+
+  importJson['nested/foo.js'].importer.forEach(
+    id => {
+      t.true(parsedTree['nested/foo.js'].importer.includes(id))
+    }
+  )
+  
+  // importer order is random
+  importJson['nested/foo.js'].importer = parsedTree['nested/foo.js'].importer
+
   t.deepEqual(
-    parser.parse('resolve.js', {depth: 3}),
-    readParsedFile(
-      'resolve.json',
-      { 
-        'resolve.js': 'resolve.js',
-        'foo.js': 'nested/foo.js',
-        'bar.js': 'nested/bar.js',
-      },
-      { semver: 'semver/index.js' }
-    )
+    parsedTree,
+    importJson
   )
 })
 
