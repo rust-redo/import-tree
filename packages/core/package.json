@@ -32,6 +32,7 @@
     "@napi-rs/cli": "^2.16.3",
     "@types/node": "^20.9.0",
     "ava": "^5.1.1",
+    "fast-glob": "^3.3.2",
     "typescript": "^5.2.2"
   },
   "ava": {
@@ -45,7 +46,9 @@
     "build": "napi build --platform --release --dts core.d.ts --js core.js && tsc",
     "build:debug": "napi build --platform",
     "prepublishOnly": "napi prepublish -t npm",
-    "test": "ava",
+    "test:mock": "ava  **/{resolve,target}.spec.mjs",
+    "test:git": "ava  **/git.spec.mjs",
+    "test": "npm run test:mock && npm run test:git",
     "universal": "napi universal",
     "version": "napi version"
   }

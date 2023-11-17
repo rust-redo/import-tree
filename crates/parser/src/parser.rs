@@ -23,7 +23,7 @@ pub struct Parser {
   source_map: Arc<SourceMap>,
   handler: Handler,
   compiler: Compiler,
-  root: String,
+  root: Arc<String>,
 }
 
 impl Parser {
@@ -34,10 +34,10 @@ impl Parser {
       source_map: source_map.clone(),
       handler: Handler::with_tty_emitter(ColorConfig::Auto, true, false, Some(source_map.clone())),
       compiler: swc::Compiler::new(source_map.clone()),
-      root: match root {
+      root: Arc::new(match root {
         Some(r) => r,
         _ => env::current_dir().unwrap().to_string_lossy().to_string(),
-      },
+      }),
     }
   }
 
@@ -49,49 +49,56 @@ impl Parser {
   ) -> HashMap<Arc<String>, ImportNode> {
     let wrapped_depth = depth.unwrap_or(2);
     let wrapped_should_resolve = should_resolve.unwrap_or(true);
-    let mut visitor = ImportVisitor::new(ImportResolver::new(wrapped_should_resolve));
+    let mut visitor = ImportVisitor::new(ImportResolver::new(self.root.clone(), wrapped_should_resolve));
 
     GLOBALS.set(&Globals::new(), || {
-      let mut visited_files: Vec<Arc<String>> = vec![];
-      self.recursion_parse(file, &mut visitor, &mut visited_files, if wrapped_should_resolve {wrapped_depth} else { 1 });
+      self.deep_parse(file, &mut visitor, if wrapped_should_resolve {wrapped_depth} else { 1 });
 
       visitor.import_node.map
     })
   }
 
-  fn recursion_parse<'a>(
+  fn deep_parse<'a>(
     &self,
     file: &str,
     visitor: &mut ImportVisitor,
-    visited_files: &mut Vec<Arc<String>>,
-    depth: u8,
+    mut depth: u8,
   ) {
-    if depth < 1 {
-      return;
-    }
+    let mut file_queue = vec![Arc::new(file.to_owned())];
+    let mut processed_ids: HashMap<Arc<String>, bool> = HashMap::new();
+    let mut current_count = 1;
+    let mut next_count = 0;
 
-    let resolved_file = &visitor.resolver.resolve_file(&self.root, file);
-    let process_id = if visitor.resolver.should_resolve {
-      resolved_file
-    } else {
-      file
-    };
-    visitor.set_process_id(process_id);
-    visitor.create_node(process_id);
-    visited_files.push(resolved_file.clone());
+      while file_queue.is_empty() == false && depth > 0 {
+        let target_file = file_queue.pop().unwrap();
+        let resolved_file = Arc::new(visitor.resolver.resolve_file(&self.root, &target_file));
+        let process_id = Arc::new(visitor.resolver.resolve_relative_root(&target_file));
+    
+        if processed_ids.contains_key(&process_id.clone()) == false {
+          processed_ids.insert(process_id.clone(), true);
 
-    self.parse_file(resolved_file, visitor);
+          visitor.set_process_id(process_id.clone());
+          visitor.create_node(process_id.clone());
+          self.parse_file(&resolved_file, visitor);
 
-    // https://docs.rs/im/latest/im/hashmap/struct.HashMap.html#impl-Clone
-    // Hashmap.clone is a shallow clone, so it won't impact performance
-    let map = visitor.import_node.map.clone();
+          let map = visitor.import_node.map.clone();
 
-    for (id, node) in map {
-      if visited_files.contains(&id) || node.kind != ImportNodeKind::Local {
-        continue;
+          for (id, node) in map {
+            if processed_ids.contains_key(&id) || node.kind != ImportNodeKind::Local {
+                continue;
+            }
+            next_count += 1;
+            file_queue.push(id);
+          }
       }
-      self.recursion_parse(&id, visitor, visited_files, depth - 1 );
-    }
+
+        current_count -= 1;
+        
+        if current_count == 0 {
+          current_count = next_count;
+          depth -= 1;
+        }
+      }
   }
 
   /// parse single js file

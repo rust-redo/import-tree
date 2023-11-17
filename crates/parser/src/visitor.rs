@@ -6,13 +6,13 @@ use swc_ecmascript::{
 };
 
 use crate::{
-  node::{self, ImportLink, ImportLinkKind, ImportNode, ImportNodeMap},
+  node::{self, ImportLink, ImportLinkKind, ImportNode, ImportNodeKind, ImportNodeMap},
   resolver::ImportResolver,
 };
 
 pub(crate) struct ImportVisitor {
   pub(crate) import_node: ImportNodeMap,
-  process_id: Option<String>,
+  process_id: Option<Arc<String>>,
   pub(crate) resolver: ImportResolver,
 }
 
@@ -25,21 +25,27 @@ impl ImportVisitor {
     }
   }
 
-  pub(crate) fn set_process_id(&mut self, id: &str) {
-    self.process_id = Some(id.to_owned());
+  pub(crate) fn set_process_id(&mut self, id: Arc<String>) {
+    self.process_id = Some(id.clone());
   }
 
   /// insert node if not exist
-  pub(crate) fn create_node(&mut self, id: &str) {
-    if self.import_node.map.get_mut(&Arc::new(id.to_string())).is_none() {
-      self.import_node.create_node(id);
+  pub(crate) fn create_node(&mut self, id: Arc<String>) {
+    if self.import_node.map.get_mut(&id).is_none() {
+      self.import_node.create_node(&id);
     }
   }
 
   fn resolve_from_process_id(&self, request: &str) -> ImportNode {
-    self
+    let id = self
       .resolver
-      .resolve_module(self.process_id.as_ref().unwrap(), request)
+      .resolve_module(self.process_id.as_ref().unwrap(), request);
+
+    ImportNode {
+        kind: ImportNodeKind::compute(&id, &request),
+        id: Arc::new(id),
+        ..ImportNode::default()
+    }
   }
 
   fn insert_process_node_depent(&mut self, module: ImportNode) -> &mut ImportNode {

@@ -26,11 +26,9 @@ test('should parse without recursion', (t) => {
     },
     { semver: 'semver/index.js' }
   )
-  const barFile = getCodeFile('./nested/bar.js')
-  const fooFile = getCodeFile('./nested/foo.js')
 
-  importJson[barFile].import = null
-  importJson[fooFile].importer.pop()
+  importJson['nested/bar.js'].import = null
+  importJson['nested/foo.js'].importer.pop()
 
   t.deepEqual(
     parser.parse('resolve.js', {depth: 1}),
@@ -43,15 +41,15 @@ test('should parse without resolve', t => {
     'resolve.json',
     { 
       'resolve.js': 'resolve.js',
-      'foo.js': './nested/foo',
-      'bar.js': './nested/bar',
+      'foo.js': 'nested/foo',
+      'bar.js': 'nested/bar',
     },
     { semver: 'semver' },
     false
   )
 
-  importJson['./nested/bar'].import = null
-  importJson['./nested/foo'].importer.pop()
+  importJson['nested/bar'].import = null
+  importJson['nested/foo'].importer.pop()
 
   t.deepEqual(
     parser.parse('resolve.js', { resolve: false }),
@@ -64,15 +62,15 @@ test('should parse without recursion & resolve', (t) => {
     'resolve.json',
     { 
       'resolve.js': 'resolve.js', 
-      'foo.js': './nested/foo',
-      'bar.js': './nested/bar',
+      'foo.js': 'nested/foo',
+      'bar.js': 'nested/bar',
     },
     { semver: 'semver' },
     false
   )
 
-  importJson['./nested/bar'].import = null
-  importJson['./nested/foo'].importer.pop()
+  importJson['nested/bar'].import = null
+  importJson['nested/foo'].importer.pop()
 
   t.deepEqual(
     parser.parse('resolve.js', { depth: 1, resolve: false }),

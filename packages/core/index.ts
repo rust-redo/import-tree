@@ -36,12 +36,15 @@ export class Parser {
     {
       depth,
       resolve,
+      buffer,
     }: {
       depth?: number,
       resolve?: boolean
+      buffer?: boolean
     } = {}
-  ): Record<string, ImportNode>  {
-    return JSON.parse(this.parser.parse(Buffer.from(file), depth, resolve).toString())
+  ): Record<string, ImportNode> | Buffer  {
+    const parsed = this.parser.parse(Buffer.from(file), depth, resolve)
+    return buffer ? parsed : JSON.parse(parsed.toString())
   }
 }
 
