@@ -11,6 +11,9 @@ importers:
       debug:
         specifier: ^4.3.1
         version: 4.3.4
+      import-analysis:
+        specifier: file:packages/cli
+        version: file:packages/cli
       simple-git:
         specifier: ^3.20.0
         version: 3.20.0
@@ -32,6 +35,9 @@ importers:
       import-analysis.core:
         specifier: workspace:*
         version: link:../core
+      import-analysis.graph:
+        specifier: workspace:*
+        version: link:../graph
     devDependencies:
       '@types/node':
         specifier: ^20.9.0
@@ -1231,7 +1237,6 @@ packages:
   /commander@11.1.0:
     resolution: {integrity: sha512-yPVavfyCcRhmorC7rWlkHn15b4wDVgVmBA7kV4QVBsF7kv/9TKJAbAXVTxvTnwP8HHKjRCJDClKbciiYS7p0DQ==}
     engines: {node: '>=16'}
-    dev: false
 
   /common-path-prefix@3.0.0:
     resolution: {integrity: sha512-QE33hToZseCH3jS0qN96O/bSh3kaw/h+Tq7ngyY9eWDUnTlTNUyqfqvCXioLe5Na5jFsL78ra/wuBU4iuEgd4w==}
@@ -2439,4 +2444,14 @@ packages:
     resolution: {integrity: sha512-0VxCNJ7AGOMCWeHVyTrGzUgrK4asT4ml9PEkeGirAkKNYXYzoPJCLvmyfdoOXcjTHPs10OZVMfD1Rwg16AZyYw==}
     dependencies:
       tslib: 2.3.0
+    dev: true
+
+  file:packages/cli:
+    resolution: {directory: packages/cli, type: directory}
+    name: import-analysis
+    hasBin: true
+    dependencies:
+      commander: 11.1.0
+      import-analysis.core: link:packages/core
+      import-analysis.graph: link:packages/graph
     dev: true

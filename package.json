@@ -1,5 +1,5 @@
 {
-  "name": "import-analysis",
+  "name": "import-analysis.root",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,13 +8,15 @@
     "postinstall": "cd packages/core/__test__/fixture/code && npm i",
     "repos": "node scripts/git-repo.mjs",
     "bench": "pnpm --filter \"*bench*\" run bench",
-    "build:npm": "pnpm --filter \"{packages/**}\" run build"
+    "build:npm": "pnpm --filter \"{packages/**}\" run build",
+    "parse": "it"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "debug": "^4.3.1",
+    "import-analysis": "file:packages/cli",
     "simple-git": "^3.20.0"
   }
 }

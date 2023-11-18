@@ -2,7 +2,7 @@
   "name": "import-analysis",
   "version": "0.0.0",
   "bin": {
-    "import": "./index.js"
+    "it": "./index.js"
   },
   "scripts": {
     "build": "tsc"
@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "commander": "^11.1.0",
-    "import-analysis.core": "workspace:*"
+    "import-analysis.core": "workspace:*",
+    "import-analysis.graph": "workspace:*"
   }
 }
