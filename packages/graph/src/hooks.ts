@@ -81,9 +81,9 @@ export const useGraph = (center: { x: number, y: number }) => {
         name: window.repoName,
         type: 'graph',
         layout: 'force',
-        symbolSize: 12,
+        symbolSize: 16,
         edgeSymbol: ['none', 'arrow'],
-        edgeSymbolSize: 5,
+        edgeSymbolSize: 6,
         roam: true,
         label: {
           // show: true
