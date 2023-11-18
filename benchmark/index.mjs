@@ -1,5 +1,5 @@
 import { join } from 'node:path'
-import { Parser } from 'import-analysis.core'
+import { Parser } from 'import-tree.core'
 import { Bench } from 'tinybench';
 
 const repos = [

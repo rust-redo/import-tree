@@ -1,5 +1,5 @@
 {
-  "name": "import-analysis.core",
+  "name": "import-tree.core",
   "version": "0.0.0",
   "main": "index.js",
   "types": "index.d.ts",
@@ -10,7 +10,7 @@
     "index.d.ts"
   ],
   "napi": {
-    "name": "import-analysis.core",
+    "name": "import-tree.core",
     "triples": {
       "additional": [
         "aarch64-apple-darwin",

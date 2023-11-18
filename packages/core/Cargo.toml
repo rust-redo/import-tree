@@ -1,6 +1,6 @@
 [package]
 edition = "2021"
-name = "import-analysis-core"
+name = "import-tree-core"
 version = "0.0.0"
 
 [lib]

@@ -11,7 +11,7 @@ importers:
       debug:
         specifier: ^4.3.1
         version: 4.3.4
-      import-analysis:
+      import-tree:
         specifier: file:packages/cli
         version: file:packages/cli
       simple-git:
@@ -20,7 +20,7 @@ importers:
 
   benchmark:
     devDependencies:
-      import-analysis.core:
+      import-tree.core:
         specifier: workspace:*
         version: link:../packages/core
       tinybench:
@@ -32,10 +32,10 @@ importers:
       commander:
         specifier: ^11.1.0
         version: 11.1.0
-      import-analysis.core:
+      import-tree.core:
         specifier: workspace:*
         version: link:../core
-      import-analysis.graph:
+      import-tree.graph:
         specifier: workspace:*
         version: link:../graph
     devDependencies:
@@ -79,7 +79,7 @@ importers:
       echarts:
         specifier: ^5.4.3
         version: 5.4.3
-      import-analysis.core:
+      import-tree.core:
         specifier: workspace:*
         version: link:../core
       preact:
@@ -2431,10 +2431,10 @@ packages:
 
   file:packages/cli:
     resolution: {directory: packages/cli, type: directory}
-    name: import-analysis
+    name: import-tree
     hasBin: true
     dependencies:
       commander: 11.1.0
-      import-analysis.core: link:packages/core
-      import-analysis.graph: link:packages/graph
+      import-tree.core: link:packages/core
+      import-tree.graph: link:packages/graph
     dev: true

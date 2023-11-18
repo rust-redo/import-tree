@@ -1,8 +1,8 @@
 <p align="left">
-  <img src="https://github.com/rust-redo/import-analysis/assets/102238922/56ef774d-6ed0-4491-afab-93fbeba9e955" >
+  <img src="https://user-images.githubusercontent.com/102238922/283716554-56ef774d-6ed0-4491-afab-93fbeba9e955.png" >
 </p>
 
-# import-analysis(WIP)
+# import-tree(WIP)
 
 A super fast tool that uses [swc](https://swc.rs/) to build JavaScript/TypeScript module `import/require`-relation tree.
 
@@ -15,11 +15,11 @@ A super fast tool that uses [swc](https://swc.rs/) to build JavaScript/TypeScrip
 
 ## Usage
 
-`import-analysis` is not only a cli tool, you can also use it as a JavaScript API or a specific bundler plugin.
+`import-tree` is not only a cli tool, you can also use it as a JavaScript API or a specific bundler plugin.
 
 ## Benchmark
 
-`import-analysis` tested its Nodejs api's benchmark in multiple popular third-party git repos.
+`import-tree` tested its Nodejs api's benchmark in multiple popular third-party git repos.
 
 ```shell
 System:

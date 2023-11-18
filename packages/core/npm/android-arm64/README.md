@@ -1,3 +1,3 @@
-# `import-analysis.core-android-arm64`
+# `import-tree.core-android-arm64`
 
-This is the **aarch64-linux-android** binary for `import-analysis.core`
+This is the **aarch64-linux-android** binary for `import-tree.core`

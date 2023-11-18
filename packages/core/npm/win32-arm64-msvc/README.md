@@ -1,3 +1,3 @@
-# `import-analysis.core-win32-arm64-msvc`
+# `import-tree.core-win32-arm64-msvc`
 
-This is the **aarch64-pc-windows-msvc** binary for `import-analysis.core`
+This is the **aarch64-pc-windows-msvc** binary for `import-tree.core`

@@ -1,5 +1,5 @@
 {
-  "name": "import-analysis",
+  "name": "import-tree",
   "version": "0.0.0",
   "bin": {
     "it": "./index.js"
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "commander": "^11.1.0",
-    "import-analysis.core": "workspace:*",
-    "import-analysis.graph": "workspace:*"
+    "import-tree.core": "workspace:*",
+    "import-tree.graph": "workspace:*"
   }
 }

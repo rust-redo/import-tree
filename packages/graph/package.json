@@ -1,5 +1,5 @@
 {
-  "name": "import-analysis.graph",
+  "name": "import-tree.graph",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -14,7 +14,7 @@
     "@preact/preset-vite": "^2.5.0",
     "@unocss/reset": "^0.57.3",
     "echarts": "^5.4.3",
-    "import-analysis.core": "workspace:*",
+    "import-tree.core": "workspace:*",
     "preact": "^10.16.0",
     "typescript": "^5.0.2",
     "unocss": "^0.57.3",

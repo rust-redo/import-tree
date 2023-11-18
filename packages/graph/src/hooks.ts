@@ -1,6 +1,6 @@
 import { createContext } from "preact"
 import { type StateUpdater, useEffect, useState, useContext } from "preact/hooks"
-import type { ImportNode } from 'import-analysis.core'
+import type { ImportNode } from 'import-tree.core'
 
 declare global {
   interface Window {

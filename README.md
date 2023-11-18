@@ -1,30 +1,30 @@
 <p align="left">
-  <img src="https://github.com/rust-redo/import-analysis/assets/102238922/56ef774d-6ed0-4491-afab-93fbeba9e955" >
+  <img src="https://github.com/rust-redo/import-tree/assets/102238922/56ef774d-6ed0-4491-afab-93fbeba9e955" >
 </p>
 
-# import-analysis(WIP)
+# import-tree(WIP)
 
 A super fast tool that uses [swc](https://swc.rs/) to build JavaScript/TypeScript module `import/require`-relation tree.
 
 ## Features
 
 - :zap: Blazing fast ESM/CJS modules scanner [WIP]
-- :rainbow: Interactive module relation [graph view](https://rust-redo.github.io/import-analysis/axios.html) [WIP]
+- :rainbow: Interactive module relation [graph view](https://rust-redo.github.io/import-tree/axios.html) [WIP]
 - :hammer_and_pick: Strict `import` diagnosis based on [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import) rules [todo]
 - :herb: Rich plugins support (vite, rollup, webpack) [todo]
 
 ## Install
 
 ```shell
-$ npm i -g import-analysis
+$ npm i -g import-tree
 ```
 
 ## Usage
 
-<!-- `import-analysis` is not only a cli tool, you can also use it as a JavaScript API or a specific bundler plugin. -->
+<!-- `import-tree` is not only a cli tool, you can also use it as a JavaScript API or a specific bundler plugin. -->
 
 ```shell
-Usage: import-analysis [options]
+Usage: import-tree [options]
 
 CLI to some JavaScript string utilities
 
@@ -47,7 +47,7 @@ $ it -t ./src/index.js -o ./import.json # parse target file and output json file
 
 ## Benchmark
 
-`import-analysis` tested its Nodejs api's benchmark in multiple popular third-party git repos.
+`import-tree` tested its Nodejs api's benchmark in multiple popular third-party git repos.
 
 ```shell
 System:
@@ -64,9 +64,9 @@ Binaries:
 
 |repo|file type|parsed files|import links|import depth|average time(ns)|graph|
 |---|----|-----|----|----|----|---|
-|[axios@1.6.2](https://github.com/axios/axios/tree/v1.6.2)|`.js`|59|132|3|**12**,249,262.50|[view](https://rust-redo.github.io/import-analysis/axios.html)|
-|[rxjs@8.0.0-alpha.12](https://github.com/ReactiveX/rxjs/tree/8.0.0-alpha.12)|`.ts`|205|877|3|**351**,465,279.17|[view](https://rust-redo.github.io/import-analysis/rxjs.html)|
-|[nextui@2.0.0](https://github.com/nextui-org/nextui)|`.ts` `.tsx`|230|13510|3|**4429**,009,233.62|[view](https://rust-redo.github.io/import-analysis/nextui.html)|
+|[axios@1.6.2](https://github.com/axios/axios/tree/v1.6.2)|`.js`|59|132|3|**12**,249,262.50|[view](https://rust-redo.github.io/import-tree/axios.html)|
+|[rxjs@8.0.0-alpha.12](https://github.com/ReactiveX/rxjs/tree/8.0.0-alpha.12)|`.ts`|205|877|3|**351**,465,279.17|[view](https://rust-redo.github.io/import-tree/rxjs.html)|
+|[nextui@2.0.0](https://github.com/nextui-org/nextui)|`.ts` `.tsx`|230|13510|3|**4429**,009,233.62|[view](https://rust-redo.github.io/import-tree/nextui.html)|
 
 ## Roadmap
 

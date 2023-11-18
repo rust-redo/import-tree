@@ -1,12 +1,12 @@
 {
-  "name": "import-analysis.core-darwin-universal",
+  "name": "import-tree.core-darwin-universal",
   "version": "0.0.0",
   "os": [
     "darwin"
   ],
-  "main": "import-analysis.core.darwin-universal.node",
+  "main": "import-tree.core.darwin-universal.node",
   "files": [
-    "import-analysis.core.darwin-universal.node"
+    "import-tree.core.darwin-universal.node"
   ],
   "license": "MIT",
   "engines": {

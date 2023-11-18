@@ -1,3 +1,3 @@
-# `import-analysis.core-android-arm-eabi`
+# `import-tree.core-android-arm-eabi`
 
-This is the **armv7-linux-androideabi** binary for `import-analysis.core`
+This is the **armv7-linux-androideabi** binary for `import-tree.core`

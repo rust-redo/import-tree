@@ -1,5 +1,5 @@
 {
-  "name": "import-analysis.core-win32-ia32-msvc",
+  "name": "import-tree.core-win32-ia32-msvc",
   "version": "0.0.0",
   "os": [
     "win32"
@@ -7,9 +7,9 @@
   "cpu": [
     "ia32"
   ],
-  "main": "import-analysis.core.win32-ia32-msvc.node",
+  "main": "import-tree.core.win32-ia32-msvc.node",
   "files": [
-    "import-analysis.core.win32-ia32-msvc.node"
+    "import-tree.core.win32-ia32-msvc.node"
   ],
   "license": "MIT",
   "engines": {

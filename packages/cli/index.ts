@@ -1,13 +1,13 @@
 import {resolve, isAbsolute} from 'node:path'
 import {writeFileSync, readFileSync} from 'node:fs'
 import { Command } from 'commander'
-import { Parser } from 'import-analysis.core'
+import { Parser } from 'import-tree.core'
 import { version } from './package.json'
 
 const program = new Command()
 
 program
-  .name('import-analysis')
+  .name('import-tree')
   .description('CLI to some JavaScript string utilities')
   .version(version);
 
@@ -37,8 +37,8 @@ function guessName(root: string) {
 }
 
 function computeHtml({name, buf, target}: any) {
-  const graphJs = readFileSync(require.resolve('import-analysis.graph/dist/index.js')).toString()
-  const graphStyle = readFileSync(require.resolve('import-analysis.graph/dist/index.css')).toString()
+  const graphJs = readFileSync(require.resolve('import-tree.graph/dist/index.js')).toString()
+  const graphStyle = readFileSync(require.resolve('import-tree.graph/dist/index.css')).toString()
   const tree = buf.toString()
 
   return `

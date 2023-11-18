@@ -1,5 +1,5 @@
 {
-  "name": "import-analysis.root",
+  "name": "import-tree.root",
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
@@ -17,7 +17,7 @@
   "license": "ISC",
   "devDependencies": {
     "debug": "^4.3.1",
-    "import-analysis": "file:packages/cli",
+    "import-tree": "file:packages/cli",
     "simple-git": "^3.20.0"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "import-analysis.core-freebsd-x64",
+  "name": "import-tree.core-freebsd-x64",
   "version": "0.0.0",
   "os": [
     "freebsd"
@@ -7,9 +7,9 @@
   "cpu": [
     "x64"
   ],
-  "main": "import-analysis.core.freebsd-x64.node",
+  "main": "import-tree.core.freebsd-x64.node",
   "files": [
-    "import-analysis.core.freebsd-x64.node"
+    "import-tree.core.freebsd-x64.node"
   ],
   "license": "MIT",
   "engines": {

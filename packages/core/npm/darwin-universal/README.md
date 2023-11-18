@@ -1,3 +1,3 @@
-# `import-analysis.core-darwin-universal`
+# `import-tree.core-darwin-universal`
 
-This is the **universal-apple-darwin** binary for `import-analysis.core`
+This is the **universal-apple-darwin** binary for `import-tree.core`

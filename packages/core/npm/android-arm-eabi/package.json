@@ -1,5 +1,5 @@
 {
-  "name": "import-analysis.core-android-arm-eabi",
+  "name": "import-tree.core-android-arm-eabi",
   "version": "0.0.0",
   "os": [
     "android"
@@ -7,9 +7,9 @@
   "cpu": [
     "arm"
   ],
-  "main": "import-analysis.core.android-arm-eabi.node",
+  "main": "import-tree.core.android-arm-eabi.node",
   "files": [
-    "import-analysis.core.android-arm-eabi.node"
+    "import-tree.core.android-arm-eabi.node"
   ],
   "license": "MIT",
   "engines": {

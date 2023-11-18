@@ -1,3 +1,3 @@
-# `import-analysis.core-linux-arm-gnueabihf`
+# `import-tree.core-linux-arm-gnueabihf`
 
-This is the **armv7-unknown-linux-gnueabihf** binary for `import-analysis.core`
+This is the **armv7-unknown-linux-gnueabihf** binary for `import-tree.core`
