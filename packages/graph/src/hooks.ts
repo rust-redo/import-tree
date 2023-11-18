@@ -68,7 +68,7 @@ export const useGraph = (center: { x: number, y: number }) => {
   const [option, setOption] = useState({
     tooltip: {},
     legend: [{
-      left: '2%',
+      left: '1%',
       bottom: '2%',
       orient: 'vertical',
       data: [],

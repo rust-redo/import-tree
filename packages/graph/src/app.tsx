@@ -21,7 +21,7 @@ export function App() {
   const [dark, setDark] = useDark()
 
   return (
-    <Context.Provider value={{ dark, actions: {setDark} }}>
+    <Context.Provider value={{ dark, actions: { setDark } }}>
       <NavBar />
       <ImportGraph />
     </Context.Provider>
@@ -45,9 +45,11 @@ function Button({
 
 
 function NavBar() {
-  const {actions: {setDark}} = useContext(Context)
+  const { actions: { setDark } } = useContext(Context)
   return <div className="bg-primary flex flex-justify-between flex-items-center p-x-6">
-    <h2 className="text-primary">{window.repoName ?? window.targetFile}</h2>
+    <h2 className="text-primary">{
+      [window.repoName, window.targetFile].filter(Boolean).join(' > ')
+    }</h2>
     <Button
       className="i-carbon-sun dark:i-carbon-moon important-w-[2rem] important-h-[2rem] text-primary"
       onClick={() => setDark(dark => !dark)}
