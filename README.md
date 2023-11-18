@@ -37,29 +37,12 @@ Options:
   -h, --help              display help for command
 ```
 
-### parse target file with custom import-tree depth
-
 ```shell
-$ it -t ./src/index.js -d 3
-```
-
-### parse target file in specific root directory
-
-```shell
-$ it -t ./src/index.js -r ../root
-```
-
-### parse target files of glob pattern
-
-```shell
-$ it -t ./**/index.js -r ../root
-```
-
-### parse target file and output graph html or json file
-
-```shell
-$ it -t ./src/index.js -o ./graph.html
-$ it -t ./src/index.js -o ./import.json
+$ it -t ./src/index.js -d 3 # parse target file with custom import-tree depth, depth starts from 0
+$ it -t ./src/index.js -r ../root # parse target file in specific root directory
+$ it -t ./**/index.js -r ../root # parse target files of glob pattern
+$ it -t ./src/index.js -o ./graph.html # parse target file and output graph html 
+$ it -t ./src/index.js -o ./import.json # parse target file and output json file
 ```
 
 ## Benchmark
