@@ -13,6 +13,10 @@ A super fast tool that uses [swc](https://swc.rs/) to build JavaScript/TypeScrip
 - :hammer_and_pick: Strict `import` diagnosis based on [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import) rules [todo]
 - :herb: Rich plugins support (vite, rollup, webpack) [todo]
 
+## Screenshot
+
+![import](https://github.com/rust-redo/import-tree/assets/102238922/0d363ae9-91fc-4d5b-8214-ac2bc484ae3a)
+
 ## Install
 
 ```shell
@@ -83,6 +87,7 @@ Binaries:
   - parse target files of glob pattern :heavy_check_mark:	
 - `npm cli`
   - output import tree in json & html format :heavy_check_mark:	
+  - meaningful process log
   - check circular dependencies
 - `module graph`
   - graph chart renderer :heavy_check_mark:	

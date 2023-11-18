@@ -1,8 +1,12 @@
-import {resolve, isAbsolute} from 'node:path'
+#!/usr/bin/env node
+
+import {resolve} from 'node:path'
 import {writeFileSync, readFileSync} from 'node:fs'
 import { Command } from 'commander'
-import { Parser } from 'import-tree.core'
+import ora from 'ora'
+import { ImportNode, Parser } from 'import-tree.core'
 import { version } from './package.json'
+import { performance } from 'node:perf_hooks'
 
 const program = new Command()
 
@@ -17,12 +21,29 @@ program
   .option('-d, --depth <number>', 'import relation tree\'s depth', '2')
   .option('-o, --output <file>', 'parsing result\'s file path', './import.json')
   .action((options) => {
+    const now = performance.now()
     const { root, depth, output, target } = options
-    const absRoot = isAbsolute(root) ? root : resolve(process.cwd(), root)
-    const parser = new Parser({ root: absRoot })
-    const buf = parser.parse(target, {depth: Number(depth), buffer: true}) as Buffer
+    const parser = new Parser({ root })
+    const spinner = ora('').start(`parsing ${target} in ${parser.root}...`);
 
-    writeFileSync(output, output.endsWith('.html') ? computeHtml({name: guessName(absRoot), buf, target}) : buf)
+    
+    Promise.resolve().then(() => {
+      return parser.parse(target, {depth: Number(depth), buffer: true}) as Buffer
+    }).then((buf: Buffer) => {
+      spinner.color = 'yellow';
+      spinner.text = `writing parsed data to ${output}...`;
+  
+      writeFileSync(output, output.endsWith('.html') ? computeHtml({name: guessName(parser.root), buf, target}) : buf)
+  
+      const timeCost = parseInt(`${performance.now() - now}`)
+      const {files, links} = computeParsedFiles(buf)
+
+      setTimeout(() => {
+        spinner.succeed(`parsed total ${files} files, ${links} imports in ${timeCost} ms`)
+        spinner.succeed(`data saved to ${output}\n`)
+      }, 500)
+    })
+
   });
 
 program.parse();
@@ -69,6 +90,15 @@ function computeHtml({name, buf, target}: any) {
   .replace("{{GRAPH_JS}}", graphJs)
   .replace("{{GRAPH_STYLE}}", graphStyle)
   ;
-  
- 
+}
+
+function computeParsedFiles(buf: Buffer) {
+  const parsed = JSON.parse(buf.toString()) as Record<string, ImportNode>
+  const files = Object.keys(parsed)
+  return {
+    files: files.length,
+    links: files.reduce((acc, file) => {
+      return acc + (parsed[file].import?.length ?? 0)
+    }, 0)
+  }
 }

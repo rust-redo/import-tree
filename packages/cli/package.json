@@ -2,18 +2,23 @@
   "name": "import-tree",
   "version": "0.0.0",
   "bin": {
-    "it": "./index.js"
+    "it": "./dist/index.js"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsup ./index.ts"
   },
   "devDependencies": {
     "@types/node": "^20.9.0",
+    "commander": "^11.1.0",
+    "tsup": "^7.3.0",
+    "ora": "^7.0.1",
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "commander": "^11.1.0",
     "import-tree.core": "workspace:*",
     "import-tree.graph": "workspace:*"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
