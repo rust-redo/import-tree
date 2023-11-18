@@ -14,7 +14,7 @@
       "strictNullChecks": true,
       "moduleResolution": "node",
       "noEmitHelpers": false,
-      "importHelpers": true,
+      "importHelpers": false,
       "noResolve": false,
       "inlineSourceMap": false,
       "declaration": true,

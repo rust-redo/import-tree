@@ -43,7 +43,7 @@ impl Parser {
 
   pub fn parse(
     &self,
-    file: &str,
+    files: Vec<&str>,
     depth: Option<u8>,
     should_resolve: Option<bool>,
   ) -> HashMap<Arc<String>, ImportNode> {
@@ -52,7 +52,9 @@ impl Parser {
     let mut visitor = ImportVisitor::new(ImportResolver::new(self.root.clone(), wrapped_should_resolve));
 
     GLOBALS.set(&Globals::new(), || {
-      self.deep_parse(file, &mut visitor, if wrapped_should_resolve {wrapped_depth} else { 1 });
+      for file in files.iter() {
+        self.deep_parse(file, &mut visitor, if wrapped_should_resolve {wrapped_depth} else { 1 });
+      }
 
       visitor.import_node.map
     })

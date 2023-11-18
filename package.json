@@ -1,15 +1,16 @@
 {
   "name": "import-analysis.root",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "cd packages/core/__test__/fixture/code && npm i",
-    "repos": "node scripts/git-repo.mjs",
     "bench": "pnpm --filter \"*bench*\" run bench",
     "build:npm": "pnpm --filter \"{packages/**}\" run build",
-    "parse": "it"
+    "install:test": "cd packages/core/__test__/fixture/code && npm i",
+    "parse": "it",
+    "postinstall": "pnpm repos && pnpm install:test",
+    "repos": "node scripts/git-repo.mjs",
+    "test": "pnpm --filter \"{packages/**}\" run test"
   },
   "keywords": [],
   "author": "",

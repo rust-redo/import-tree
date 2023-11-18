@@ -44,10 +44,11 @@ Binaries:
   pnpm: 8.8.0 
 ```
 
-|repo|file type|total files|import links|import depth|ops/sec|average time(ns)|graph|
+|repo|file type|parsed files|import links|import depth|ops/sec|average time(ns)|graph|
 |---|----|-----|----|----|----|---|-----|
 |[axios@1.6.2](https://github.com/axios/axios/tree/v1.6.2)|`.js`|59|132|3|81|**12**,249,262.50|[view](https://rust-redo.github.io/import-analysis/axios.html)|
 |[rxjs@8.0.0-alpha.12](https://github.com/ReactiveX/rxjs/tree/8.0.0-alpha.12)|`.ts`|205|877|3|2|**351**,465,279.17|[view](https://rust-redo.github.io/import-analysis/rxjs.html)|
+|[nextui@2.0.0](https://github.com/nextui-org/nextui)|`.ts` `.tsx`|230|13510|3|0|**4429**,009,233.62|[view](https://rust-redo.github.io/import-analysis/rxjs.html)|
 
 ## Roadmap
 
@@ -61,8 +62,9 @@ Binaries:
   - handle exception robustly 
 - `npm core`
   - cross-platform fast Nodejs api
+  - parse target files in glob pattern
 - `npm cli`
-  - output import tree in json & html format
+  - output import tree in json & html format :heavy_check_mark:	
   - check circular dependencies
 - `module graph`
   - graph chart renderer :heavy_check_mark:	

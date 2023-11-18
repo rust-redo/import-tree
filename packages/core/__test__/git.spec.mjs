@@ -26,3 +26,11 @@ test('rxjs', t => {
   ])
   validateParsed(t, data, files)
 })
+
+test('nextui', t => {  
+  const parser = new Parser({root: getGitRepo('nextui/packages/components')})
+  const data = parser.parse('**/src/index.ts', {depth: 3})
+  const files = getGitRepoFiles('nextui/packages/components', '**/src/**/*.{ts,tsx}', [
+  ])
+  validateParsed(t, data, files)
+})

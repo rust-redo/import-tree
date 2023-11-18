@@ -4,14 +4,15 @@ import { Bench } from 'tinybench';
 
 const repos = [
   ['axios', 'lib/axios.js', 3],
-  ['rxjs', 'src/index.ts', 3]
+  ['rxjs', 'src/index.ts', 3],
+  ['nextui/packages/components/', './**/src/index.ts', 3]
 ]
 
-function statis(name, map) {
+function statis(name, map, depth) {
   const files = Object.keys(map)
   console.log(`${name} total files: ${files.length}, total links: ${files.reduce((acc, file) => {
     return acc + (map[file].import?.length ?? 0)
-  }, 0)}`)
+  }, 0)}, depth: ${depth}`)
 }
 async function run() {
   for (const [name, target, depth] of repos) {
@@ -21,7 +22,7 @@ async function run() {
       })
     }
 
-    statis(name, createParser().parse(target, {resolve: false}))
+    statis(name, createParser().parse(target, {resolve: false}), 1)
 
     const bench = new Bench({ time: 200  });
     bench
@@ -30,7 +31,7 @@ async function run() {
       })
 
     for (let i = 1; i <= depth; i++) {
-      statis(name, createParser().parse(target, {depth: i}))
+      statis(name, createParser().parse(target, {depth: i}), i)
 
       bench.add(`${name} with depth=${i}`, () => {
         createParser().parse(target, { depth: i })

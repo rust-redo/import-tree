@@ -1,3 +1,5 @@
+import { isAbsolute, resolve } from 'node:path'
+import fg from 'fast-glob'
 import {Parser as CoreParser} from './core'
 
 export enum ImportNodeType {
@@ -27,12 +29,15 @@ export interface ImportLink {
 
 export class Parser {
   parser: CoreParser
-  constructor({root}: {root?: string} = {}) {
-    this.parser = new CoreParser(typeof root === 'string' ? Buffer.from(root) : undefined)
+  root: string
+  constructor({root = './'}: {root?: string} = {}) {
+    const absRoot = isAbsolute(root) ? root : resolve(process.cwd(), root)
+    this.root = root
+    this.parser = new CoreParser(Buffer.from(absRoot))
   }
 
   parse(
-    file: string, 
+    files: string | string[], 
     {
       depth,
       resolve,
@@ -43,7 +48,16 @@ export class Parser {
       buffer?: boolean
     } = {}
   ): Record<string, ImportNode> | Buffer  {
-    const parsed = this.parser.parse(Buffer.from(file), depth, resolve)
+    const fileArr = (Array.isArray(files) ? files : [files]).reduce((acc, file) => {
+      if(fg.isDynamicPattern(file)) {
+        acc.push(...fg.sync(file, {cwd: this.root}))
+      } else {
+        acc.push(file)
+      }
+      return acc
+    }, [] as string[])
+
+    const parsed = this.parser.parse(Buffer.from(fileArr.toString()), depth, resolve)
     return buffer ? parsed : JSON.parse(parsed.toString())
   }
 }

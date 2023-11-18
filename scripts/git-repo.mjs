@@ -8,7 +8,8 @@ const repoRootDir = join(process.cwd(), 'repos')
 // [[name, origin, branch]...]
 const repos = [
   ['axios', 'https://github.com/axios/axios.git', 'v1.6.2'],
-  ['rxjs', 'https://github.com/ReactiveX/rxjs.git', '8.0.0-alpha.12']
+  ['rxjs', 'https://github.com/ReactiveX/rxjs.git', '8.0.0-alpha.12'],
+  ['nextui', 'https://github.com/nextui-org/nextui.git', 'v2.0.0']
 ]
 
 async function exist(file) {
@@ -21,8 +22,8 @@ async function run() {
   debug.enable('simple-git:output*');
   const git = simpleGit({ maxConcurrentProcesses: 6, }).clean(CleanOptions.FORCE)
 
-  // create ./repoRootDir dir
-  if (!exist(repoRootDir)) {
+  // create ./repos dir
+  if (!(await exist(repoRootDir))) {
     await mkdir(repoRootDir)
   }
 
