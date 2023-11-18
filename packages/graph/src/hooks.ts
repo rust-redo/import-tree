@@ -1,6 +1,7 @@
 import { createContext } from "preact"
 import { type StateUpdater, useEffect, useState, useContext } from "preact/hooks"
 import type { ImportNode } from 'import-analysis.core'
+
 declare global {
   interface Window {
     repoName: string
@@ -10,11 +11,11 @@ declare global {
 }
 
 interface GraphNode {
-  id: string, 
-  name: string, 
+  id: string,
+  name: string,
   category?: number | string
-  x?: number, 
-  y?: number 
+  x?: number,
+  y?: number
   symbolSize?: number | number[]
   itemStyle?: {
     borderWidth?: number,
@@ -30,7 +31,7 @@ interface GraphLink {
 
 export const Context = createContext({
   dark: false,
-  actions: {}
+  actions: {},
 } as {
   dark: boolean
   actions: {
@@ -61,16 +62,18 @@ export const useDark = () => {
   return [dark, setDark] as [boolean, StateUpdater<boolean>]
 }
 
-export const useGraph = (center: {x: number, y: number}) => {
-  const {dark} = useContext(Context)
-  const [importTree, setImportTree] = useState(window.importTree)
+export const useGraph = (center: { x: number, y: number }) => {
+  const { dark } = useContext(Context)
+  const [importTree] = useState(window.importTree)
   const [option, setOption] = useState({
     tooltip: {},
     legend: [{
       left: '2%',
-      bottom: '5%',
+      bottom: '2%',
       orient: 'vertical',
       data: [],
+      itemWidth: 12,
+      itemHeight: 10,
       textStyle: {},
     }],
     series: [
@@ -102,22 +105,24 @@ export const useGraph = (center: {x: number, y: number}) => {
   function computeGraphData(tree: typeof importTree) {
     const data: GraphNode[] = []
     const links: GraphLink[] = []
-    const categoryMaps: Record<string, boolean>= {}
+    const categoryMaps: Record<string, boolean> = {}
 
-    Object.keys(tree).forEach(id => {
-      const dir = id.replace(/\/?[^/]+\.\w+$/, '')
-      if(categoryMaps[dir] === undefined) {
-        categoryMaps[dir] = true
-      }
-      data.push({id, name: id, category: dir})
-      links.push(...(tree[id].import?.map(link => ({ source: id!, target: link.id })) ?? []))
+    Object.values(tree).forEach(node => {
+      const dir = {
+        node_modules: 'external',
+        builtin: 'builtin',
+        local: node.id.replace(/\/?[^/]+\.\w+$/, '')
+      }[node.type]
+      categoryMaps[dir] = true
+      data.push({ id: node.id, name: node.id, category: dir })
+      links.push(...(tree[node.id].import?.map(link => ({ source: node.id, target: link.id })) ?? []))
     })
 
-    const categories = Object.keys(categoryMaps).sort().map(cate => ({name: cate}))
+    const categories = Object.keys(categoryMaps).sort().map(cate => ({ name: cate }))
     data.forEach(node => {
       node.category = categories.findIndex(cate => cate.name === node.category)
     })
-      
+
     return { data, links, categories: categories }
   }
 
@@ -125,16 +130,42 @@ export const useGraph = (center: {x: number, y: number}) => {
     Object.assign(option.series[0], computeGraphData(importTree))
     // @ts-expect-error
     option.legend[0].data = option.series[0].categories
-    console.log(option)
-    setOption({...option})
+
+    setOption({ ...option })
   }, [importTree, center.x, center.y])
 
   useEffect(() => {
     option.legend[0].textStyle = {
-      color:  dark ? '#fff' : '#121212'
+      color: dark ? '#fff' : '#121212'
     }
-    setOption({...option})
+    setOption({ ...option })
   }, [dark])
 
   return { option, setOption }
+}
+
+export const graphTheme = {
+    "color": [
+        "#2ec7c9",
+        "#b6a2de",
+        "#5ab1ef",
+        "#ffb980",
+        "#d87a80",
+        "#8d98b3",
+        "#e5cf0d",
+        "#97b552",
+        "#88bb88",
+        "#dc69aa",
+        "#07a2a4",
+        "#9a7fd1",
+        "#588dd5",
+        "#f5994e",
+        "#c05050",
+        "#59678c",
+        "#c9ab00",
+        "#7eb00a",
+        "#6f5553",
+        "#c14089"
+    ],
+   
 }

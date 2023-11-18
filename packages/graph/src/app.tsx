@@ -7,7 +7,7 @@ import {
   LegendComponent,
   TooltipComponent,
 } from 'echarts/components'
-import { Context, useDark, useGlobalStyle, useGraph } from './hooks'
+import { Context, graphTheme, useDark, useGlobalStyle, useGraph } from './hooks'
 
 use([
   CanvasRenderer,
@@ -47,7 +47,7 @@ function Button({
 function NavBar() {
   const {actions: {setDark}} = useContext(Context)
   return <div className="bg-primary flex flex-justify-between flex-items-center p-x-6">
-    <h2 className="text-primary">{window.repoName}</h2>
+    <h2 className="text-primary">{window.repoName ?? window.targetFile}</h2>
     <Button
       className="i-carbon-sun dark:i-carbon-moon important-w-[2rem] important-h-[2rem] text-primary"
       onClick={() => setDark(dark => !dark)}
@@ -64,7 +64,7 @@ function ImportGraph() {
   )
 
   useEffect(() => {
-    chartInstanceRef.current = echartsInit(chartRef.current)
+    chartInstanceRef.current = echartsInit(chartRef.current, graphTheme)
   }, [])
 
   useEffect(() => {
@@ -72,6 +72,6 @@ function ImportGraph() {
     chartInstanceRef.current?.setOption(option)
   }, [option, chartInstanceRef.current])
 
-  return <div ref={chartRef} className="w-100vw h-[calc(100vh-40px)]">
+  return <div ref={chartRef} className="w-100vw h-[calc(100vh-60px)]">
   </div>
 }

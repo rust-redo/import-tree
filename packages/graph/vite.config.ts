@@ -1,10 +1,18 @@
-import { defineConfig } from 'vite'
+import { defineConfig, UserConfig } from 'vite'
 import {presetAttributify, presetUno, presetIcons} from 'unocss'
 import UnoCSS from 'unocss/vite'
 import preact from '@preact/preset-vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  build: {
+    rollupOptions: {
+      output: {
+        entryFileNames:  '[name].js',
+        assetFileNames: '[name][extname]'
+      }
+    }
+  },
   plugins: [
     UnoCSS({
       shortcuts: {
@@ -19,4 +27,4 @@ export default defineConfig({
     }),
     preact()
   ],
-})
+}) as UserConfig
