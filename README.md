@@ -13,6 +13,10 @@ A super fast tool that uses [swc](https://swc.rs/) to build JavaScript/TypeScrip
 - :hammer_and_pick: Strict `import` diagnosis based on [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import) rules [todo]
 - :herb: Rich plugins support (vite, rollup, webpack) [todo]
 
+## Module Graph Demo
+
+[axios](https://rust-redo.github.io/import-analysis/axios.html)
+
 ## Install
 
 ```shell
@@ -40,10 +44,10 @@ Binaries:
   pnpm: 8.8.0 
 ```
 
-|repo|file type|total files|import links|import depth|ops/sec|average time(ns)|
-|---|----|-----|----|----|----|---|
-|[axios@1.6.2](https://github.com/axios/axios/tree/v1.6.2)|`.js`|59|132|3|81|**12**,249,262.50|
-|[rxjs@8.0.0-alpha.12](https://github.com/ReactiveX/rxjs/tree/8.0.0-alpha.12)|`.ts`|205|877|3|2|**351**,465,279.17|
+|repo|file type|total files|import links|import depth|ops/sec|average time(ns)|graph|
+|---|----|-----|----|----|----|---|-----|
+|[axios@1.6.2](https://github.com/axios/axios/tree/v1.6.2)|`.js`|59|132|3|81|**12**,249,262.50|[view](https://rust-redo.github.io/import-analysis/axios.html)|
+|[rxjs@8.0.0-alpha.12](https://github.com/ReactiveX/rxjs/tree/8.0.0-alpha.12)|`.ts`|205|877|3|2|**351**,465,279.17|[view](https://rust-redo.github.io/import-analysis/rxjs.html)|
 
 ## Roadmap
 
