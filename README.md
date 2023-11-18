@@ -9,13 +9,9 @@ A super fast tool that uses [swc](https://swc.rs/) to build JavaScript/TypeScrip
 ## Features
 
 - :zap: Blazing fast ESM/CJS modules scanner [WIP]
-- :rainbow: Interactive module relation graph view [WIP]
+- :rainbow: Interactive module relation [graph view](https://rust-redo.github.io/import-analysis/axios.html) [WIP]
 - :hammer_and_pick: Strict `import` diagnosis based on [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import) rules [todo]
 - :herb: Rich plugins support (vite, rollup, webpack) [todo]
-
-## Module Graph Demo
-
-[axios](https://rust-redo.github.io/import-analysis/axios.html)
 
 ## Install
 
@@ -26,6 +22,45 @@ $ npm i -g import-analysis
 ## Usage
 
 <!-- `import-analysis` is not only a cli tool, you can also use it as a JavaScript API or a specific bundler plugin. -->
+
+```shell
+Usage: import-analysis [options]
+
+CLI to some JavaScript string utilities
+
+Options:
+  -V, --version           output the version number
+  -t, --target <file>     target file's relative or absolute path
+  -r, --root <directory>  target codebase root directory (default: "./")
+  -d, --depth <number>    import relation tree's depth (default: "2")
+  -o, --output <file>     parsing result's file path (default: "./import.json")
+  -h, --help              display help for command
+```
+
+### parse target file with custom import-tree depth
+
+```shell
+$ it -t ./src/index.js -d 3
+```
+
+### parse target file in specific root directory
+
+```shell
+$ it -t ./src/index.js -r ../root
+```
+
+### parse target files of glob pattern
+
+```shell
+$ it -t ./**/index.js -r ../root
+```
+
+### parse target file and output graph html or json file
+
+```shell
+$ it -t ./src/index.js -o ./graph.html
+$ it -t ./src/index.js -o ./import.json
+```
 
 ## Benchmark
 
@@ -55,14 +90,14 @@ Binaries:
 ### v0.1.x [WIP]
 
 - `rust parser`
-  - construct import tree with specific depth
+  - construct import tree with specific depth :heavy_check_mark:	
   - parse esm static `import/export` syntax
   - resolve internal/external module path
   - compute circular dependencies
   - handle exception robustly 
 - `npm core`
   - cross-platform fast Nodejs api
-  - parse target files in glob pattern :heavy_check_mark:	
+  - parse target files of glob pattern :heavy_check_mark:	
 - `npm cli`
   - output import tree in json & html format :heavy_check_mark:	
   - check circular dependencies

@@ -14,7 +14,7 @@ program
 program
   .requiredOption('-t, --target <file>', 'target file\'s relative or absolute path')
   .option('-r, --root <directory>', 'target codebase root directory', './')
-  .option('-d, --depth <number>', 'separator character', '2')
+  .option('-d, --depth <number>', 'import relation tree\'s depth', '2')
   .option('-o, --output <file>', 'parsing result\'s file path', './import.json')
   .action((options) => {
     const { root, depth, output, target } = options
