@@ -57,5 +57,6 @@ Binaries:
 - `module graph`
   - graph chart renderer :heavy_check_mark:	
   - dark mode :heavy_check_mark:	
+  - circular import highlight
 
 
