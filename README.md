@@ -8,14 +8,20 @@ A super fast tool that uses [swc](https://swc.rs/) to build JavaScript/TypeScrip
 
 ## Features
 
-- :zap: Blazing fast ESM/CJS modules scanner
-- :rainbow: Interactive module relation graph view
+- :zap: Blazing fast ESM/CJS modules scanner [WIP]
+- :rainbow: Interactive module relation graph view [WIP]
 - :hammer_and_pick: Strict `import` diagnosis based on [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import) rules [todo]
 - :herb: Rich plugins support (vite, rollup, webpack) [todo]
 
+## Install
+
+```shell
+$ npm i -g import-analysis
+```
+
 ## Usage
 
-`import-analysis` is not only a cli tool, you can also use it as a JavaScript API or a specific bundler plugin.
+<!-- `import-analysis` is not only a cli tool, you can also use it as a JavaScript API or a specific bundler plugin. -->
 
 ## Benchmark
 
