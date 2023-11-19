@@ -68,6 +68,8 @@ export const useGraph = (center: { x: number, y: number }) => {
   const [option, setOption] = useState({
     tooltip: {},
     legend: [{
+      type: 'scroll',
+      pageIconSize: 8,
       left: '1%',
       bottom: '2%',
       orient: 'vertical',
