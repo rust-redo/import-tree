@@ -55,8 +55,10 @@ impl Parser {
     let mut visitor = ImportVisitor::new(ImportResolver::new(self.root.clone(), wrapped_should_resolve, self.alias.clone()));
 
     GLOBALS.set(&Globals::new(), || {
+      let mut processed_ids: HashMap<Arc<String>, bool> = HashMap::new();
+
       for file in files.iter() {
-        self.deep_parse(file, &mut visitor, if wrapped_should_resolve {wrapped_depth} else { 1 });
+        self.deep_parse(file, &mut visitor, if wrapped_should_resolve {wrapped_depth} else { 1 }, &mut processed_ids);
       }
 
       visitor.import_node.map
@@ -68,9 +70,9 @@ impl Parser {
     file: &str,
     visitor: &mut ImportVisitor,
     mut depth: u8,
+    processed_ids: &mut HashMap<Arc<String>, bool>
   ) {
     let mut file_queue = vec![Arc::new(file.to_owned())];
-    let mut processed_ids: HashMap<Arc<String>, bool> = HashMap::new();
     let mut current_count = 1;
     let mut next_count = 0;
 
