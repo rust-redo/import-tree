@@ -4,6 +4,7 @@ use crate::{
   visitor::ImportVisitor,
 };
 use std::{collections::HashMap, env, path::Path, sync::Arc};
+use oxc_resolver::Alias;
 use swc_core::{
   base::{config::IsModule, Compiler},
   common::{
@@ -24,10 +25,11 @@ pub struct Parser {
   handler: Handler,
   compiler: Compiler,
   root: Arc<String>,
+  alias: Arc<Alias>,
 }
 
 impl Parser {
-  pub fn new(root: Option<String>) -> Parser {
+  pub fn new(root: Option<String>, alias: Option<Alias>) -> Parser {
     let source_map = Arc::<SourceMap>::default();
 
     Parser {
@@ -38,6 +40,7 @@ impl Parser {
         Some(r) => r,
         _ => env::current_dir().unwrap().to_string_lossy().to_string(),
       }),
+      alias: Arc::new(alias.unwrap_or(vec![]))
     }
   }
 
@@ -49,7 +52,7 @@ impl Parser {
   ) -> HashMap<Arc<String>, ImportNode> {
     let wrapped_depth = depth.unwrap_or(2);
     let wrapped_should_resolve = should_resolve.unwrap_or(true);
-    let mut visitor = ImportVisitor::new(ImportResolver::new(self.root.clone(), wrapped_should_resolve));
+    let mut visitor = ImportVisitor::new(ImportResolver::new(self.root.clone(), wrapped_should_resolve, self.alias.clone()));
 
     GLOBALS.set(&Globals::new(), || {
       for file in files.iter() {
@@ -73,8 +76,8 @@ impl Parser {
 
       while file_queue.is_empty() == false && depth > 0 {
         let target_file = file_queue.pop().unwrap();
-        let resolved_file = Arc::new(visitor.resolver.resolve_file(&self.root, &target_file));
-        let process_id = Arc::new(visitor.resolver.resolve_relative_root(&target_file));
+        let resolved_file = Arc::new(ImportResolver::resolve_file(&self.root, &target_file));
+        let process_id = Arc::new(visitor.resolver.resolve_relative_root(&target_file).0);
     
         if processed_ids.contains_key(&process_id.clone()) == false {
           processed_ids.insert(process_id.clone(), true);
@@ -105,12 +108,16 @@ impl Parser {
 
   /// parse single js file
   fn parse_file(&self, file: &str, visitor: &mut ImportVisitor) {
+    let (syntax,is_js, is_ts) = self.get_options(file);
+
+    if !is_js {
+      return;
+    }
+
     let fm = self
       .source_map
       .load_file(Path::new(file))
       .expect(&format!("failed to load {}", file));
-
-    let (syntax, is_ts) = self.get_options(file);
 
     let mut program = self
       .compiler
@@ -130,9 +137,10 @@ impl Parser {
     module.visit_with(visitor);
   }
 
-  fn get_options(&self, file: &str) -> (Syntax, bool) {
+  /// return (Syntax, is_js, is_ts)
+  fn get_options(&self, file: &str) -> (Syntax, bool, bool) {
     if file.ends_with(".ts") {
-      return (Syntax::Typescript(Default::default()), true);
+      return (Syntax::Typescript(Default::default()), true, true);
     }
 
     if file.ends_with(".tsx") {
@@ -142,6 +150,7 @@ impl Parser {
           ..Default::default()
         }),
         true,
+        true
       );
     }
 
@@ -151,10 +160,17 @@ impl Parser {
           jsx: true,
           ..Default::default()
         }),
+        true,
         false,
       );
     }
 
-    return (Syntax::default(), false);
+    if file.ends_with(".js") {
+      return (Syntax::default(),true, false);
+    }
+
+
+    return (Syntax::default(), false, false);
+    
   }
 }

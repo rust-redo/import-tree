@@ -37,6 +37,7 @@ Options:
   -t, --target <file>     target file's relative or absolute path
   -r, --root <directory>  target codebase root directory (default: "./")
   -d, --depth <number>    import relation tree's depth (default: "2")
+  -a, --alias <alias>     module path alias
   -o, --output <file>     parsing result's file path (default: "./import.json")
   -h, --help              display help for command
 ```

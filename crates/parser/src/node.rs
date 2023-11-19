@@ -116,12 +116,12 @@ pub struct ImportNode {
 }
 
 impl ImportNodeKind {
-  pub(crate) fn compute(id: &str, request: &str) -> ImportNodeKind {
+  pub(crate) fn compute(id: &str, in_root: bool) -> ImportNodeKind {
     if BUILTINS.contains(&id) || BUILTINS.contains(&id.replace("node:", "").as_str()) {
       return ImportNodeKind::Builtin;
     }
 
-    if id.contains("/node_modules/") || (!id.starts_with('.') && !request.starts_with('.')) {
+    if id.contains("node_modules/") || !in_root {
       return ImportNodeKind::NodeModules;
     }
 

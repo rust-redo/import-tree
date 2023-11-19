@@ -19,13 +19,13 @@ program
   .requiredOption('-t, --target <file>', 'target file\'s relative or absolute path')
   .option('-r, --root <directory>', 'target codebase root directory', './')
   .option('-d, --depth <number>', 'import relation tree\'s depth', '2')
+  .option('-a, --alias <alias>', 'module path alias')
   .option('-o, --output <file>', 'parsing result\'s file path', './import.json')
   .action((options) => {
     const now = performance.now()
-    const { root, depth, output, target } = options
-    const parser = new Parser({ root })
+    const { root, depth, output, target, alias } = options
+    const parser = new Parser({ root, alias })
     const spinner = ora('').start(`parsing ${target} in ${parser.root}...`);
-
     
     Promise.resolve().then(() => {
       return parser.parse(target, {depth: Number(depth), buffer: true}) as Buffer
@@ -39,7 +39,7 @@ program
       const {files, links} = computeParsedFiles(buf)
 
       setTimeout(() => {
-        spinner.succeed(`parsed total ${files} files, ${links} imports in ${timeCost} ms`)
+        spinner.succeed(`saved total ${files} files, ${links} imports  in ${timeCost} ms`)
         spinner.succeed(`data saved to ${output}\n`)
       }, 500)
     })

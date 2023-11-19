@@ -37,12 +37,13 @@ impl ImportVisitor {
   }
 
   fn resolve_from_process_id(&self, request: &str) -> ImportNode {
-    let id = self
+    let (id, in_root) = self
       .resolver
       .resolve_module(self.process_id.as_ref().unwrap(), request);
 
+
     ImportNode {
-        kind: ImportNodeKind::compute(&id, &request),
+        kind: ImportNodeKind::compute(&id, in_root),
         id: Arc::new(id),
         ..ImportNode::default()
     }
