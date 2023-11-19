@@ -9,7 +9,8 @@ const repoRootDir = join(process.cwd(), 'repos')
 const repos = [
   ['axios', 'https://github.com/axios/axios.git', 'v1.6.2'],
   ['rxjs', 'https://github.com/ReactiveX/rxjs.git', '8.0.0-alpha.12'],
-  ['nextui', 'https://github.com/nextui-org/nextui.git', 'v2.0.0']
+  ['nextui', 'https://github.com/nextui-org/nextui.git', 'v2.0.0'],
+  ['antd', 'https://github.com/ant-design/ant-design', '5.11.2']
 ]
 
 async function exist(file) {

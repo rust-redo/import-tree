@@ -5,7 +5,8 @@ import { Bench } from 'tinybench';
 const repos = [
   ['axios', 'lib/axios.js', 3],
   ['rxjs', 'src/index.ts', 3],
-  ['nextui/packages/components/', './**/src/index.ts', 3]
+  ['nextui/packages/components/', './**/src/index.ts', 3],
+  ['antd', 'components/index.ts', 3],
 ]
 
 function statis(name, map, depth) {
