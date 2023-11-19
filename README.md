@@ -71,7 +71,7 @@ Binaries:
 |[axios@1.6.2](https://github.com/axios/axios/tree/v1.6.2)|`.js`|59|132|3|**12**,249,262.50|[view](https://rust-redo.github.io/import-tree/axios.html)|
 |[rxjs@8.0.0-alpha.12](https://github.com/ReactiveX/rxjs/tree/8.0.0-alpha.12)|`.ts`|205|877|3|**351**,465,279.17|[view](https://rust-redo.github.io/import-tree/rxjs.html)|
 |[nextui@2.0.0](https://github.com/nextui-org/nextui)|`.ts` `.tsx`|230|13510|3|**4429**,009,233.62|[view](https://rust-redo.github.io/import-tree/nextui.html)|
-|[antd@5.11.2](https://github.com/ant-design/ant-design)|`.ts` `.tsx`|658|2282|3|**332**,391,816.69|[view](https://rust-redo.github.io/import-tree/nextui.html)|
+|[antd@5.11.2](https://github.com/ant-design/ant-design)|`.ts` `.tsx`|658|2282|3|**332**,391,816.69|[view](https://rust-redo.github.io/import-tree/antd.html)|
 
 ## Roadmap
 
