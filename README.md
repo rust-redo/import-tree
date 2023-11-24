@@ -4,14 +4,25 @@
 
 # import-tree(WIP)
 
-A super fast tool that uses [swc](https://swc.rs/) to build JavaScript/TypeScript module `import/require`-relation tree.
+A super fast tool that uses [swc](https://swc.rs/) to build and transform JavaScript/TypeScript module graph.
+
+## Why `import-tree`
+
+Javascript module graph is very useful for
+
+- dead code elimination
+- code shift
+- code quality diagnosis
+- codebase structure analysis
+
+and yeah, `import-tree` is a powerful and fast tool to get you there.
 
 ## Features
 
 - :zap: Blazing fast ESM/CJS modules scanner [WIP]
 - :rainbow: Interactive module relation [graph view](https://rust-redo.github.io/import-tree/axios.html) [WIP]
 - :hammer_and_pick: Strict `import` diagnosis based on [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import) rules [todo]
-- :herb: Rich plugins support (vite, rollup, webpack) [todo]
+- :herb: Rich plugins support (vscode, vite, rollup, webpack) [todo]
 
 ## Screenshot
 
