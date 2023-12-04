@@ -134,9 +134,7 @@ impl Parser {
       .unwrap();
 
     program.visit_mut_with(&mut resolver(Mark::new(), Mark::new(), is_ts));
-
-    let module = program.expect_module();
-    module.visit_with(visitor);
+    program.visit_with(visitor);
   }
 
   /// return (Syntax, is_js, is_ts)

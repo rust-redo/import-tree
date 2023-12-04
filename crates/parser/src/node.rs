@@ -1,4 +1,7 @@
-use std::{collections::{HashMap, HashSet}, sync::Arc};
+use std::{
+  collections::{HashMap, HashSet},
+  sync::Arc,
+};
 
 use serde::Serialize;
 
@@ -113,6 +116,8 @@ pub struct ImportNode {
   pub kind: ImportNodeKind,
   pub importer: Option<HashSet<Arc<String>>>,
   pub import: Option<Vec<ImportLink>>,
+  #[serde(skip_serializing)]
+  pub import_paths: Vec<Vec<Arc<String>>>,
 }
 
 impl ImportNodeKind {
@@ -148,36 +153,67 @@ impl ImportNodeMap {
       arc_id.clone(),
       ImportNode {
         id: arc_id.clone(),
+        import_paths: vec![vec![arc_id]],
         ..ImportNode::default()
       },
     );
   }
 
   pub(crate) fn insert_node_depend(&mut self, id: &str, module: ImportNode) -> &mut ImportNode {
-    let root_id = Arc::new(id.to_owned());
-    let module_id = module.id.clone();
-    let module_node = self.map.get_mut(&module_id);
+    unsafe {
+      let root_id = Arc::new(id.to_owned());
+      let module_id = module.id.clone();
+      let module_node = self.map.get_mut(&module_id);
 
-    let module_node = match module_node {
-      Some(m) => m,
-      None => {
-        self.map.insert(module_id.clone(), module);
-        self.map.get_mut(&module_id.clone()).unwrap()
+      let module_node = match module_node {
+        Some(m) => m,
+        None => {
+          self.map.insert(module_id.clone(), module);
+          self.map.get_mut(&module_id.clone()).unwrap() as *mut ImportNode
+        }
+      };
+
+      if (*module_node).importer.is_none() {
+        (*module_node).importer = Some(HashSet::new());
       }
-    };
 
-    if module_node.importer.is_none() {
-      module_node.importer = Some(HashSet::new());
+      (*module_node)
+        .importer
+        .as_mut()
+        .unwrap()
+        .insert(root_id.clone());
+
+      let root_node = self.map.get_mut(&root_id.clone()).unwrap() as *mut ImportNode;
+
+      if (*root_node).import.is_none() {
+        (*root_node).import = Some(vec![]);
+      }
+
+      // add new paths to internal module
+      if (*module_node).kind == ImportNodeKind::Local {
+        (*module_node)
+          .import_paths
+          .extend((*root_node).import_paths.iter().map(|paths| {
+            let mut new_paths = Vec::from_iter(paths.iter().map(|p| p.clone()));
+            new_paths.push(module_id.clone());
+            // println!("{:?}", new_paths);
+            return new_paths;
+          }));
+
+          for paths in (*module_node).import_paths.iter(){
+            let mut visited_map:HashMap<Arc<String>, usize> = HashMap::new();
+            for (index, p) in paths.iter().enumerate() {
+              if visited_map.contains_key(&p.clone()) {
+                let start = *visited_map.get(&p.clone()).unwrap();
+                // println!("circular {:?}", &paths[start..=index]);
+              }
+
+              visited_map.insert(p.clone(), index);
+            }
+          }
+      }
+
+      &mut *root_node
     }
-
-    module_node.importer.as_mut().unwrap().insert(root_id.clone());
-
-    let root_node = self.map.get_mut(&root_id.clone()).unwrap();
-
-    if root_node.import.is_none() {
-      root_node.import = Some(vec![]);
-    }
-
-    root_node
   }
 }
